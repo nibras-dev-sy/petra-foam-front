@@ -10,12 +10,13 @@ import MapSection from './components/MapSection'
 export async function generateMetadata({
   params,
 }: {
-  params: { lang: Locale }
+  params: any
 }): Promise<Metadata> {
-  const dictionary = await getDictionary(params.lang)
+  const { lang } = await params
+  const dictionary = await getDictionary(lang)
   const t = dictionary.contactPage || {}
   
-  const isArabic = params.lang === "ar"
+  const isArabic = lang === "ar"
   
   return {
     title: isArabic ? 'تواصل معنا' : 'Contact Us',
@@ -31,13 +32,14 @@ export async function generateMetadata({
 export default async function ContactUsPage({
   params,
 }: {
-  params: { lang: Locale }
+  params: any
 }) {
-  const dictionary = await getDictionary(params.lang)
-  const contactData = await getContactInfo(params.lang)
+  const { lang } = await params
+  const dictionary = await getDictionary(lang)
+  const contactData = await getContactInfo(lang)
   
   const t = dictionary.contactPage
-  const isRTL = params.lang === 'ar'
+  const isRTL = lang === 'ar'
   
   return (
     <div className={`w-full ${isRTL ? "rtl" : "ltr"}`}>

@@ -18,12 +18,13 @@ const cairo = Cairo({
 export async function generateMetadata({
   params,
 }: {
-  params: { lang: Locale }
+  params: any
 }): Promise<Metadata> {
+  const { lang } = await params
   // Get dictionary
-  const dictionary = await getDictionary(params.lang)
+  const dictionary = await getDictionary(lang)
   
-  const isArabic = params.lang === "ar"
+  const isArabic = lang === "ar"
   
   // Define metadata based on language
   return {
@@ -40,8 +41,8 @@ export async function generateMetadata({
       : "thermal insulation, Petra Foam, XPS, EPS, roof insulation, wall insulation, energy efficiency, Jordan",
     openGraph: {
       type: "website",
-      locale: params.lang,
-      alternateLocale: params.lang === "en" ? "ar" : "en",
+      locale: lang,
+      alternateLocale: lang === "en" ? "ar" : "en",
       siteName: isArabic ? "بترا فوم" : "Petra Foam",
       images: [
         {
@@ -65,7 +66,7 @@ export async function generateMetadata({
       follow: true,
     },
     alternates: {
-      canonical: `/${params.lang}`,
+      canonical: `/${lang}`,
       languages: {
         'en': '/en',
         'ar': '/ar',
@@ -83,19 +84,20 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode
-  params: { lang: Locale }
+  params: any
 }) {
-  const dictionary = await getDictionary(params.lang)
-  const dir = params.lang === "ar" ? "rtl" : "ltr"
+  const { lang } = await params
+  const dictionary = await getDictionary(lang)
+  const dir = lang === "ar" ? "rtl" : "ltr"
 
   // Update HTML attributes
   if (typeof document !== 'undefined') {
-    document.documentElement.lang = params.lang
+    document.documentElement.lang = lang
     document.documentElement.dir = dir
   }
 
   return (
-    <html lang={params.lang} dir={dir} className={`${inter.variable} ${cairo.variable}`}>
+    <html lang={lang} dir={dir} className={`${inter.variable} ${cairo.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         {/* Add structured data for organization */}
@@ -105,7 +107,7 @@ export default async function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": params.lang === "ar" ? "بترا فوم" : "Petra Foam",
+              "name": lang === "ar" ? "بترا فوم" : "Petra Foam",
               "url": process.env.NEXT_PUBLIC_SITE_URL || "https://petra-foam.com",
               "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "https://petra-foam.com"}/images/logo1.png`,
               "contactPoint": {
@@ -122,10 +124,10 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`min-h-screen flex flex-col ${params.lang === "ar" ? "font-arabic" : "font-sans"}`}>
-        <Header lang={params.lang} dictionary={dictionary} />
+      <body className={`min-h-screen flex flex-col ${lang === "ar" ? "font-arabic" : "font-sans"}`}>
+        <Header lang={lang} dictionary={dictionary} />
         <main className="flex-grow">{children}</main>
-        <Footer lang={params.lang} dictionary={dictionary} />
+        <Footer lang={lang} dictionary={dictionary} />
       </body>
     </html>
   )

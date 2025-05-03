@@ -134,12 +134,13 @@ export default async function ProductsPage({
 export async function generateMetadata({
   params,
 }: {
-  params: { lang: Locale }
+  params: any
 }): Promise<Metadata> {
-  const dictionary = await getDictionary(params.lang)
+  const { lang } = await params
+  const dictionary = await getDictionary(lang)
   const t = dictionary.productsPage || {}
   
-  const isArabic = params.lang === "ar"
+  const isArabic = lang === "ar"
   
   return {
     title: isArabic ? 'المنتجات' : 'Products',

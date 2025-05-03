@@ -13,12 +13,13 @@ import { Suspense } from "react"
 export async function generateMetadata({
   params,
 }: {
-  params: { lang: Locale }
+  params: any
 }): Promise<Metadata> {
-  const dictionary = await getDictionary(params.lang)
+  const { lang } = await params
+  const dictionary = await getDictionary(lang)
   const t = dictionary.homePage || {}
   
-  const isArabic = params.lang === "ar"
+  const isArabic = lang === "ar"
   
   return {
     title: isArabic ? 'الرئيسية' : 'Home',
@@ -31,7 +32,7 @@ export async function generateMetadata({
 export default async function Home({
   params,
 }: {
-  params: { lang: Locale }
+  params: any
 }) {
   const { lang } = await params
   const dictionary = await getDictionary(lang)
@@ -110,7 +111,7 @@ export default async function Home({
             
             <div className={`relative ${lang === "ar" ? "md:order-1" : "md:order-2"} flex justify-center`}>
               <div className="w-full h-80 md:h-96 lg:h-[450px] relative">
-                <div className="absolute inset-0 bg-blue-700/30 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl transform rotate-1">
+                <div className="absolute inset-0 bg-blue-700/30 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl transform">
                   {heroData.headerImage ? (
                     <>
                       <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent z-10"></div>
