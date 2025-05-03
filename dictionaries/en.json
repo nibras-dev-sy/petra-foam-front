@@ -1,0 +1,12 @@
+{
+  "navigation": {
+    "home": "Home",
+    "products": "Products",
+    "projects": "Projects",
+    "aboutUs": "About Us",
+    "contactUs": "Contact Us"
+  },
+  "languageSwitcher": {
+    "switchTo": "Switch to"
+  }
+}

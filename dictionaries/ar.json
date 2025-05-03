@@ -1,0 +1,12 @@
+{
+  "navigation": {
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "projects": "المشاريع",
+    "aboutUs": "من نحن",
+    "contactUs": "اتصل بنا"
+  },
+  "languageSwitcher": {
+    "switchTo": "تغيير اللغة إلى"
+  }
+}
