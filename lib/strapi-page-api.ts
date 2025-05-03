@@ -167,4 +167,41 @@ export async function getAboutUsInfo(lang: Locale, dictionary: any) {
       description: dictionary.aboutUsPage?.description,
     };
   }
+}
+
+// Function to get contact info from Strapi API
+export async function getContactInfo(locale: string) {
+  try {
+    // Set the API endpoint
+    const apiUrl = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/contact-info?locale=${locale}`;
+    
+    // Fetch the data
+    const response = await fetch(apiUrl, { 
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      next: { revalidate: 60 } // Revalidate every 60 seconds
+    });
+
+    // Parse the response
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch contact info');
+    }
+
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching contact info:', error);
+    
+    // Return fallback data if the API request fails
+    return {
+      email1: 'info@petra-foam.com',
+      email2: 'sales@petra-foam.com',
+      phone1: '+962 6 4711780',
+      phone2: '+962 796655027',
+      address: 'Alqastal Industial Zone, Amman / Jordan'
+    };
+  }
 } 

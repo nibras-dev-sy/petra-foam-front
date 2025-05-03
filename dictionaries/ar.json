@@ -166,5 +166,31 @@
         }
       ]
     }
+  },
+  "contactPage": {
+    "title": "تواصل معنا",
+    "description": "هل لديك أسئلة أو تحتاج إلى مزيد من المعلومات؟ تواصل معنا وسنرد عليك في أقرب وقت ممكن",
+    "contactInfo": {
+      "title": "معلومات الاتصال",
+      "emailTitle": "البريد الإلكتروني",
+      "phoneTitle": "الهاتف",
+      "addressTitle": "العنوان"
+    },
+    "formSection": {
+      "title": "أرسل لنا رسالة",
+      "nameLabel": "الاسم",
+      "namePlaceholder": "أدخل اسمك الكامل",
+      "emailLabel": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل عنوان بريدك الإلكتروني",
+      "subjectLabel": "الموضوع",
+      "subjectPlaceholder": "ما هو موضوع رسالتك؟",
+      "messageLabel": "الرسالة",
+      "messagePlaceholder": "اكتب رسالتك هنا...",
+      "submitButton": "إرسال الرسالة"
+    },
+    "map": {
+      "title": "موقعنا",
+      "viewLarger": "عرض خريطة أكبر"
+    }
   }
 }

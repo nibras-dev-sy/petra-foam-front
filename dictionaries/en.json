@@ -91,6 +91,32 @@
       ]
     }
   },
+  "contactPage": {
+    "title": "Get in Touch",
+    "description": "Have questions or need more information? Reach out to us and we'll get back to you as soon as possible",
+    "contactInfo": {
+      "title": "Contact Information",
+      "emailTitle": "Email",
+      "phoneTitle": "Phone",
+      "addressTitle": "Address"
+    },
+    "formSection": {
+      "title": "Send us a Message",
+      "nameLabel": "Your Name",
+      "namePlaceholder": "Enter your full name",
+      "emailLabel": "Your Email",
+      "emailPlaceholder": "Enter your email address",
+      "subjectLabel": "Subject",
+      "subjectPlaceholder": "What is this regarding?",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Type your message here...",
+      "submitButton": "Send Message"
+    },
+    "map": {
+      "title": "Find Us",
+      "viewLarger": "View larger map"
+    }
+  },
   "homePage": {
     "hero": {
       "title": "Advanced Thermal Insulation Solutions",
