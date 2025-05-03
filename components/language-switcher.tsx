@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { useCallback } from "react"
+import { Globe } from "lucide-react"
 
 export default function LanguageSwitcher({
   currentLang,
@@ -33,8 +34,10 @@ export default function LanguageSwitcher({
     <Button
       variant="outline"
       onClick={() => router.push(redirectedPathName(otherLang))}
-      className="rounded-full bg-white/20 text-white hover:bg-white hover:text-blue-700 border-white"
+      className="rounded-full bg-white/10 text-white hover:bg-white hover:text-blue-700 border-none"
+      size="sm"
     >
+      <Globe className="w-4 h-4 mr-2" />
       {switchLabel ? `${switchLabel} ` : ""}
       {otherLangName}
     </Button>

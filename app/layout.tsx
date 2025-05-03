@@ -6,8 +6,8 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Petra Foam",
-  description: "Thermal insulation industrial Jordan",
-  generator: 'v0.dev'
+  description: "Thermal insulation industrial company in Jordan",
+  generator: 'Next.js'
 }
 
 export default function RootLayout({
@@ -16,10 +16,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html>
-      <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-      </head>
+    <html suppressHydrationWarning>
       <body className={inter.className}>{children}</body>
     </html>
   )
