@@ -1,3 +1,4 @@
+import "../globals.css"
 import type React from "react"
 import { getDictionary } from "@/lib/dictionary"
 import type { Locale } from "@/lib/i18n-config"

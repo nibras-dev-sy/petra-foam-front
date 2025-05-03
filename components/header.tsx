@@ -76,7 +76,7 @@ export default function Header({
                   />
                 </div>
                 <div className={`font-bold text-xl ${isScrolled ? "text-blue-700" : "text-white"}`}>
-                  Petra Foam
+                  {nav.title}
                 </div>
               </div>
             ) : (

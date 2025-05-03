@@ -75,8 +75,7 @@ export default async function Home({
                     {t.hero?.exploreButton}
                   </Link>
                 </Button>
-                <Button 
-                  variant="outline" 
+                <Button
                   size="lg" 
                   className="text-white border-white hover:bg-white/10 font-medium px-6"
                   asChild
