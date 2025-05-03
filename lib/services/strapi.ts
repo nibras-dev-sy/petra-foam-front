@@ -68,4 +68,17 @@ export async function getProductsData(locale: Locale = "en") {
     console.error("Error fetching products data:", error);
     return null;
   }
+}
+
+/**
+ * Get projects data from Strapi
+ */
+export async function getProjectsData(locale: Locale = "en") {
+  try {
+    const data = await fetchAPI(`/api/projects?populate[0]=images&locale=${locale}`);
+    return data;
+  } catch (error) {
+    console.error("Error fetching projects data:", error);
+    return null;
+  }
 } 

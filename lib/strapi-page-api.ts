@@ -1,5 +1,5 @@
 import { Locale } from './i18n-config';
-import { getHomePageData, getProductsData as fetchProductsData } from './services/strapi';
+import { getHomePageData, getProductsData as fetchProductsData, getProjectsData as fetchProjectsData } from './services/strapi';
 import { getStrapiMediaUrl } from './services/media';
 
 /**
@@ -71,6 +71,51 @@ export async function getProductsData(lang: Locale, dictionary: any): Promise<an
     return [];
   } catch (error) {
     console.error('Error getting products data:', error);
+    // Fallback to empty array
+    return [];
+  }
+}
+
+/**
+ * Get projects data from Strapi or use fallback dictionary
+ */
+export async function getProjectsData(lang: Locale, dictionary: any): Promise<any[]> {
+  try {
+    const projectsData = await fetchProjectsData(lang);
+    
+    // If data exists, process it
+    if (projectsData?.data && projectsData.data.length > 0) {
+      // Map projects to a simpler format
+      return projectsData.data.map((project: any) => {
+        // Get the first image if available
+        const firstImage = project.images && project.images.length > 0 
+          ? project.images[0] 
+          : null;
+        
+        // Get medium format if available, otherwise use the original
+        const imageUrl = firstImage 
+          ? getStrapiMediaUrl(firstImage.formats?.medium?.url || firstImage.url)
+          : null;
+          
+        return {
+          id: project.id,
+          title: project.title,
+          description: project.short_description || project.description,
+          slug: project.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, ''),
+          image: {
+            url: imageUrl,
+            alt: project.title,
+            width: firstImage?.formats?.medium?.width || firstImage?.width,
+            height: firstImage?.formats?.medium?.height || firstImage?.height,
+          }
+        };
+      });
+    }
+    
+    // Fallback to empty array if no data
+    return [];
+  } catch (error) {
+    console.error('Error getting projects data:', error);
     // Fallback to empty array
     return [];
   }

@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check, Shield, Star, Clock } from "lucide-react"
 import PlaceholderImage from "@/components/placeholder-image"
-import { getHeroData, getProductsData } from "@/lib/strapi-page-api"
+import { getHeroData, getProductsData, getProjectsData } from "@/lib/strapi-page-api"
 
 export default async function Home({
   params,
@@ -21,9 +21,26 @@ export default async function Home({
   
   // Fetch products data from Strapi
   const productsData = await getProductsData(lang, dictionary);
+  
+  // Fetch projects data from Strapi
+  const projectsData = await getProjectsData(lang, dictionary);
 
   // Check if images exist
   const useRealImages = false // Set to true when real images are available
+
+  // Determine the grid layout class based on the number of items
+  const getGridClass = (itemCount: number) => {
+    // For 1 item: center it
+    if (itemCount === 1) return "grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 max-w-md mx-auto";
+    // For 2 items: show 2 columns centered
+    if (itemCount === 2) return "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 max-w-3xl mx-auto";
+    // For 3 or more items: use the regular 3-column grid
+    return "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+  };
+
+  // Calculate grid classes
+  const productsGridClass = getGridClass(productsData.length || 2); // Use 2 as fallback for static content
+  const projectsGridClass = getGridClass(projectsData.length || 3); // Use 3 as fallback for static content
 
   return (
     <div className="w-full">
@@ -79,7 +96,7 @@ export default async function Home({
             </p>
           </div>
           
-          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8`}>
+          <div className={`${productsGridClass} gap-8 mb-8`}>
             {/* Dynamic Product Cards */}
             {productsData.length > 0 ? (
               productsData.map((product) => (
@@ -292,126 +309,173 @@ export default async function Home({
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-            {/* Project 1 */}
-            <div className="group bg-white rounded-xl shadow-lg overflow-hidden">
-              <div className="relative h-64">
-                {useRealImages ? (
-                  <Image 
-                    src="/images/project1.jpg" 
-                    alt="Commercial Building Project"
-                    fill
-                    style={{ objectFit: "cover" }}
-                    className="transition-transform group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="relative h-full">
-                    <PlaceholderImage 
-                      text="Commercial Building Project"
-                      bgColor="bg-blue-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div className={`${projectsGridClass} gap-8 mb-8`}>
+            {/* Dynamic Project Cards */}
+            {projectsData.length > 0 ? (
+              projectsData.map((project) => (
+                <div key={project.id} className="group bg-white rounded-xl shadow-lg overflow-hidden">
+                  <div className="relative h-64">
+                    {project.image?.url ? (
+                      <Image 
+                        src={project.image.url}
+                        alt={project.image.alt}
+                        fill
+                        style={{ objectFit: "cover" }}
+                        className="transition-transform group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="relative h-full">
+                        <PlaceholderImage 
+                          text={project.title}
+                          bgColor="bg-blue-600"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                      </div>
+                    )}
+                    <div className={`absolute bottom-0 ${lang === "ar" ? "right-0" : "left-0"} p-4 w-full z-10`}>
+                      <h3 className="text-xl font-bold text-white">
+                        {project.title}
+                      </h3>
+                    </div>
                   </div>
-                )}
-                <div className={`absolute bottom-0 ${lang === "ar" ? "right-0" : "left-0"} p-4 w-full z-10`}>
-                  <h3 className="text-xl font-bold text-white">
-                    {t.projects?.project1?.title}
-                  </h3>
-                </div>
-              </div>
-              <div className={`p-4 ${lang === "ar" ? "text-right" : ""}`}>
-                <p className="text-gray-600 mb-4">
-                  {t.projects?.project1?.description}
-                </p>
-                <Link 
-                  href={`/${lang}/projects/commercial-building`} 
-                  className={`text-blue-700 font-medium inline-flex items-center ${lang === "ar" ? "flex-row-reverse" : ""}`}
-                >
-                  {t.projects?.viewProjectButton}
-                  <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
-                </Link>
-              </div>
-            </div>
-            
-            {/* Project 2 */}
-            <div className="group bg-white rounded-xl shadow-lg overflow-hidden">
-              <div className="relative h-64">
-                {useRealImages ? (
-                  <Image 
-                    src="/images/project2.jpg" 
-                    alt="Residential Complex Project"
-                    fill
-                    style={{ objectFit: "cover" }}
-                    className="transition-transform group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="relative h-full">
-                    <PlaceholderImage 
-                      text="Residential Complex Project"
-                      bgColor="bg-blue-600"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className={`p-4 ${lang === "ar" ? "text-right" : ""}`}>
+                    <p className="text-gray-600 mb-4">
+                      {project.description}
+                    </p>
+                    <Link 
+                      href={`/${lang}/projects/${project.slug || project.id}`}
+                      className={`text-blue-700 font-medium inline-flex items-center ${lang === "ar" ? "flex-row-reverse" : ""}`}
+                    >
+                      {t.projects?.viewProjectButton}
+                      <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
+                    </Link>
                   </div>
-                )}
-                <div className={`absolute bottom-0 ${lang === "ar" ? "right-0" : "left-0"} p-4 w-full z-10`}>
-                  <h3 className="text-xl font-bold text-white">
-                    {t.projects?.project2?.title}
-                  </h3>
                 </div>
-              </div>
-              <div className={`p-4 ${lang === "ar" ? "text-right" : ""}`}>
-                <p className="text-gray-600 mb-4">
-                  {t.projects?.project2?.description}
-                </p>
-                <Link 
-                  href={`/${lang}/projects/residential-complex`} 
-                  className={`text-blue-700 font-medium inline-flex items-center ${lang === "ar" ? "flex-row-reverse" : ""}`}
-                >
-                  {t.projects?.viewProjectButton}
-                  <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
-                </Link>
-              </div>
-            </div>
-            
-            {/* Project 3 */}
-            <div className="group bg-white rounded-xl shadow-lg overflow-hidden">
-              <div className="relative h-64">
-                {useRealImages ? (
-                  <Image 
-                    src="/images/project3.jpg" 
-                    alt="Hotel Project"
-                    fill
-                    style={{ objectFit: "cover" }}
-                    className="transition-transform group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="relative h-full">
-                    <PlaceholderImage 
-                      text="Luxury Hotel Project"
-                      bgColor="bg-blue-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              ))
+            ) : (
+              // Fallback to static project cards if no data from Strapi
+              <>
+                {/* Project 1 */}
+                <div className="group bg-white rounded-xl shadow-lg overflow-hidden">
+                  <div className="relative h-64">
+                    {useRealImages ? (
+                      <Image 
+                        src="/images/project1.jpg" 
+                        alt="Commercial Building Project"
+                        fill
+                        style={{ objectFit: "cover" }}
+                        className="transition-transform group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="relative h-full">
+                        <PlaceholderImage 
+                          text="Commercial Building Project"
+                          bgColor="bg-blue-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                      </div>
+                    )}
+                    <div className={`absolute bottom-0 ${lang === "ar" ? "right-0" : "left-0"} p-4 w-full z-10`}>
+                      <h3 className="text-xl font-bold text-white">
+                        {t.projects?.project1?.title}
+                      </h3>
+                    </div>
                   </div>
-                )}
-                <div className={`absolute bottom-0 ${lang === "ar" ? "right-0" : "left-0"} p-4 w-full z-10`}>
-                  <h3 className="text-xl font-bold text-white">
-                    {t.projects?.project3?.title}
-                  </h3>
+                  <div className={`p-4 ${lang === "ar" ? "text-right" : ""}`}>
+                    <p className="text-gray-600 mb-4">
+                      {t.projects?.project1?.description}
+                    </p>
+                    <Link 
+                      href={`/${lang}/projects/commercial-building`} 
+                      className={`text-blue-700 font-medium inline-flex items-center ${lang === "ar" ? "flex-row-reverse" : ""}`}
+                    >
+                      {t.projects?.viewProjectButton}
+                      <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              <div className={`p-4 ${lang === "ar" ? "text-right" : ""}`}>
-                <p className="text-gray-600 mb-4">
-                  {t.projects?.project3?.description}
-                </p>
-                <Link 
-                  href={`/${lang}/projects/luxury-hotel`} 
-                  className={`text-blue-700 font-medium inline-flex items-center ${lang === "ar" ? "flex-row-reverse" : ""}`}
-                >
-                  {t.projects?.viewProjectButton}
-                  <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
-                </Link>
-              </div>
-            </div>
+                
+                {/* Project 2 */}
+                <div className="group bg-white rounded-xl shadow-lg overflow-hidden">
+                  <div className="relative h-64">
+                    {useRealImages ? (
+                      <Image 
+                        src="/images/project2.jpg" 
+                        alt="Residential Complex Project"
+                        fill
+                        style={{ objectFit: "cover" }}
+                        className="transition-transform group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="relative h-full">
+                        <PlaceholderImage 
+                          text="Residential Complex Project"
+                          bgColor="bg-blue-600"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                      </div>
+                    )}
+                    <div className={`absolute bottom-0 ${lang === "ar" ? "right-0" : "left-0"} p-4 w-full z-10`}>
+                      <h3 className="text-xl font-bold text-white">
+                        {t.projects?.project2?.title}
+                      </h3>
+                    </div>
+                  </div>
+                  <div className={`p-4 ${lang === "ar" ? "text-right" : ""}`}>
+                    <p className="text-gray-600 mb-4">
+                      {t.projects?.project2?.description}
+                    </p>
+                    <Link 
+                      href={`/${lang}/projects/residential-complex`} 
+                      className={`text-blue-700 font-medium inline-flex items-center ${lang === "ar" ? "flex-row-reverse" : ""}`}
+                    >
+                      {t.projects?.viewProjectButton}
+                      <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
+                    </Link>
+                  </div>
+                </div>
+                
+                {/* Project 3 */}
+                <div className="group bg-white rounded-xl shadow-lg overflow-hidden">
+                  <div className="relative h-64">
+                    {useRealImages ? (
+                      <Image 
+                        src="/images/project3.jpg" 
+                        alt="Hotel Project"
+                        fill
+                        style={{ objectFit: "cover" }}
+                        className="transition-transform group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="relative h-full">
+                        <PlaceholderImage 
+                          text="Luxury Hotel Project"
+                          bgColor="bg-blue-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                      </div>
+                    )}
+                    <div className={`absolute bottom-0 ${lang === "ar" ? "right-0" : "left-0"} p-4 w-full z-10`}>
+                      <h3 className="text-xl font-bold text-white">
+                        {t.projects?.project3?.title}
+                      </h3>
+                    </div>
+                  </div>
+                  <div className={`p-4 ${lang === "ar" ? "text-right" : ""}`}>
+                    <p className="text-gray-600 mb-4">
+                      {t.projects?.project3?.description}
+                    </p>
+                    <Link 
+                      href={`/${lang}/projects/luxury-hotel`} 
+                      className={`text-blue-700 font-medium inline-flex items-center ${lang === "ar" ? "flex-row-reverse" : ""}`}
+                    >
+                      {t.projects?.viewProjectButton}
+                      <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
+                    </Link>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
           
           <div className="text-center">
