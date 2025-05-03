@@ -1,4 +1,5 @@
 import { getDictionary } from "@/lib/dictionary"
+import type { Metadata } from "next"
 import type { Locale } from "@/lib/i18n-config"
 import Image from "next/image"
 import Link from "next/link"
@@ -127,4 +128,26 @@ export default async function ProductsPage({
       </div>
     </div>
   )
+}
+
+// Generate metadata for the products page
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: Locale }
+}): Promise<Metadata> {
+  const dictionary = await getDictionary(params.lang)
+  const t = dictionary.productsPage || {}
+  
+  const isArabic = params.lang === "ar"
+  
+  return {
+    title: isArabic ? 'المنتجات' : 'Products',
+    description: t.description || (isArabic 
+      ? "استكشف مجموعتنا من حلول العزل الحراري عالية الجودة لمشاريع البناء الخاصة بك"
+      : "Explore our range of high-quality thermal insulation solutions for your construction projects"),
+    keywords: isArabic
+      ? "عزل XPS, عزل EPS, ألواح البوليسترين, العزل الحراري, بترا فوم"
+      : "XPS insulation, EPS insulation, polystyrene boards, thermal insulation, Petra Foam",
+  }
 } 

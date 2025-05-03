@@ -1,4 +1,5 @@
 import { getDictionary } from "@/lib/dictionary"
+import type { Metadata } from "next"
 import type { Locale } from "@/lib/i18n-config"
 import Image from "next/image"
 import Link from "next/link"
@@ -6,11 +7,31 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Check, Shield, Star, Clock } from "lucide-react"
 import PlaceholderImage from "@/components/placeholder-image"
 import { getHeroData, getProductsData, getProjectsData } from "@/lib/strapi-page-api"
+import { Suspense } from "react"
+
+// Generate metadata for the homepage
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: Locale }
+}): Promise<Metadata> {
+  const dictionary = await getDictionary(params.lang)
+  const t = dictionary.homePage || {}
+  
+  const isArabic = params.lang === "ar"
+  
+  return {
+    title: isArabic ? 'الرئيسية' : 'Home',
+    description: t.hero?.description || (isArabic 
+      ? "بترا فوم توفر أفضل منتجات العزل الحراري لتحسين كفاءة الطاقة وتوفير التكاليف في مشاريع البناء"
+      : "Petra Foam provides the best thermal insulation products to improve energy efficiency and reduce costs in construction projects"),
+  }
+}
 
 export default async function Home({
   params,
 }: {
-  params: any
+  params: { lang: Locale }
 }) {
   const { lang } = await params
   const dictionary = await getDictionary(lang)

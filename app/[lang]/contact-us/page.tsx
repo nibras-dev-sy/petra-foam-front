@@ -1,9 +1,32 @@
 import { getDictionary } from "@/lib/dictionary"
+import type { Metadata } from "next"
 import { getContactInfo } from "@/lib/strapi-page-api"
 import type { Locale } from "@/lib/i18n-config"
 import ContactCardSection from './components/ContactCardSection'
 import ContactForm from './components/ContactForm'
 import MapSection from './components/MapSection'
+
+// Generate metadata for the contact-us page
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: Locale }
+}): Promise<Metadata> {
+  const dictionary = await getDictionary(params.lang)
+  const t = dictionary.contactPage || {}
+  
+  const isArabic = params.lang === "ar"
+  
+  return {
+    title: isArabic ? 'تواصل معنا' : 'Contact Us',
+    description: t.description || (isArabic 
+      ? "هل لديك أسئلة أو تحتاج إلى مزيد من المعلومات؟ تواصل معنا وسنرد عليك في أقرب وقت ممكن"
+      : "Have questions or need more information? Reach out to us and we'll get back to you as soon as possible"),
+    keywords: isArabic
+      ? "اتصل بنا, بترا فوم, معلومات الاتصال, الموقع, عمان, الأردن"
+      : "contact us, Petra Foam, contact information, location, Amman, Jordan",
+  }
+}
 
 export default async function ContactUsPage({
   params,

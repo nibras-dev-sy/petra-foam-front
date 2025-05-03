@@ -1,4 +1,5 @@
 import { getDictionary } from "@/lib/dictionary"
+import type { Metadata } from "next"
 import type { Locale } from "@/lib/i18n-config"
 import { getAboutUsInfo } from "@/lib/strapi-page-api"
 import Image from "next/image"
@@ -12,6 +13,28 @@ import {
   Factory,
   Globe,
 } from "lucide-react"
+
+// Generate metadata for the about-us page
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: Locale }
+}): Promise<Metadata> {
+  const dictionary = await getDictionary(params.lang)
+  const t = dictionary.aboutUsPage || {}
+  
+  const isArabic = params.lang === "ar"
+  
+  return {
+    title: isArabic ? 'من نحن' : 'About Us',
+    description: isArabic 
+      ? "بترا فوم هي الشركة الرائدة في الأردن في مجال تصنيع حلول العزل الصناعية. تعرف على قصتنا وقيمنا ومسيرتنا."
+      : "Petra Foam is Jordan's premier manufacturer of industrial insulation solutions. Learn about our story, values, and journey.",
+    keywords: isArabic
+      ? "بترا فوم, من نحن, تاريخ الشركة, قيم الشركة, الجودة, الابتكار, الاستدامة, الأردن"
+      : "Petra Foam, about us, company history, company values, quality, innovation, sustainability, Jordan",
+  }
+}
 
 export default async function AboutUsPage({
   params,
