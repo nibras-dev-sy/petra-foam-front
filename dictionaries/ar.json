@@ -10,6 +10,32 @@
   "languageSwitcher": {
     "switchTo": "تغيير اللغة إلى"
   },
+  "productsPage": {
+    "title": "منتجات العزل لدينا",
+    "description": "استكشف مجموعتنا من حلول العزل الحراري عالية الجودة لمشاريع البناء الخاصة بك",
+    "specificationsTitle": "المواصفات الفنية",
+    "downloadCatalogueButton": "تحميل الكتالوج",
+    "noProductsFound": "لم يتم العثور على منتجات.",
+    "previousImage": "الصورة السابقة",
+    "nextImage": "الصورة التالية",
+    "imageCounterFormat": "{current} / {total}",
+    "xps": {
+      "title": "عزل XPS",
+      "description": "توفر ألواح البوليسترين المبثوق (XPS) عزلاً حرارياً ممتازاً ومقاومة للرطوبة. مثالية لتطبيقات الأسطح والجدران والأساسات.",
+      "density": "الكثافة",
+      "thermalConductivity": "التوصيل الحراري",
+      "compressiveStrength": "مقاومة الضغط",
+      "waterAbsorption": "امتصاص الماء"
+    },
+    "eps": {
+      "title": "عزل EPS", 
+      "description": "البوليسترين الموسع (EPS) هو عازل خفيف الوزن وصلب يوفر مقاومة حرارية ممتازة وفعالية من حيث التكلفة للعديد من التطبيقات.",
+      "density": "الكثافة",
+      "thermalConductivity": "التوصيل الحراري",
+      "compressiveStrength": "مقاومة الضغط",
+      "waterAbsorption": "امتصاص الماء"
+    }
+  },
   "homePage": {
     "hero": {
       "title": "حلول العزل الحراري المتطورة",

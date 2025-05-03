@@ -106,6 +106,11 @@ export default async function ProductsPage({
                       images={product.images || []} 
                       productTitle={product.title}
                       isRTL={isRTL}
+                      imageText={{
+                        previous: t.previousImage || "Previous image",
+                        next: t.nextImage || "Next image",
+                        counterFormat: t.imageCounterFormat || "{current} / {total}"
+                      }}
                     />
                   </div>
                 </div>

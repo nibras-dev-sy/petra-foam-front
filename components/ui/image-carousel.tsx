@@ -17,9 +17,23 @@ interface ImageCarouselProps {
   images: ImageType[];
   productTitle: string;
   isRTL?: boolean;
+  imageText?: {
+    previous?: string;
+    next?: string;
+    counterFormat?: string;
+  };
 }
 
-export function ImageCarousel({ images, productTitle, isRTL = false }: ImageCarouselProps) {
+export function ImageCarousel({ 
+  images, 
+  productTitle, 
+  isRTL = false,
+  imageText = {
+    previous: "Previous image",
+    next: "Next image",
+    counterFormat: "{current} / {total}"
+  }
+}: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // If no images, render placeholder
@@ -47,6 +61,11 @@ export function ImageCarousel({ images, productTitle, isRTL = false }: ImageCaro
     setCurrentIndex(newIndex);
   };
 
+  // Format the counter text
+  const counterText = imageText.counterFormat
+    ?.replace("{current}", String(currentIndex + 1))
+    .replace("{total}", String(images.length)) || `${currentIndex + 1} / ${images.length}`;
+
   return (
     <div className="relative w-full max-w-xl h-80 md:h-96 mx-auto group">
       {/* Current Image */}
@@ -67,14 +86,14 @@ export function ImageCarousel({ images, productTitle, isRTL = false }: ImageCaro
           <button
             onClick={goToPrevious}
             className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white/90 p-2 rounded-full shadow-md transform transition opacity-70 hover:opacity-100"
-            aria-label="Previous image"
+            aria-label={imageText.previous}
           >
             <ChevronLeft className={`w-5 h-5 text-blue-900 ${isRTL ? "rotate-180" : ""}`} />
           </button>
           <button
             onClick={goToNext}
             className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white/90 p-2 rounded-full shadow-md transform transition opacity-70 hover:opacity-100"
-            aria-label="Next image"
+            aria-label={imageText.next}
           >
             <ChevronRight className={`w-5 h-5 text-blue-900 ${isRTL ? "rotate-180" : ""}`} />
           </button>
@@ -84,7 +103,7 @@ export function ImageCarousel({ images, productTitle, isRTL = false }: ImageCaro
       {/* Image Counter */}
       {images.length > 1 && (
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-xs font-medium">
-          {currentIndex + 1} / {images.length}
+          {counterText}
         </div>
       )}
     </div>
