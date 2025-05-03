@@ -53,26 +53,33 @@ export async function getProductsData(lang: Locale, dictionary: any): Promise<an
     if (productsData?.data && productsData.data.length > 0) {
       // Map products to a simpler format
       return productsData.data.map((product: any) => {
-        // Get the first image if available
-        const firstImage = product.images && product.images.length > 0 
-          ? product.images[0] 
-          : null;
-        
-        // Get medium format if available, otherwise use the original
-        const imageUrl = firstImage 
-          ? getStrapiMediaUrl(firstImage.formats?.medium?.url || firstImage.url)
+        // Process all images
+        const images = product.images && product.images.length > 0 
+          ? product.images.map((img: any) => ({
+              id: img.id,
+              url: getStrapiMediaUrl(img.formats?.medium?.url || img.url),
+              alt: product.title,
+              width: img.formats?.medium?.width || img.width,
+              height: img.formats?.medium?.height || img.height,
+            }))
+          : [];
+          
+        // Process catalogue files
+        const catalogue = product.catalogue && product.catalogue.length > 0
+          ? {
+              id: product.catalogue[0].id,
+              url: getStrapiMediaUrl(product.catalogue[0].url),
+              name: product.catalogue[0].name,
+            }
           : null;
           
         return {
           id: product.id,
           title: product.title,
           description: product.short_description || product.description,
-          image: {
-            url: imageUrl,
-            alt: product.title,
-            width: firstImage?.formats?.medium?.width || firstImage?.width,
-            height: firstImage?.formats?.medium?.height || firstImage?.height,
-          }
+          details: product.details || {},
+          images: images,
+          catalogue: catalogue
         };
       });
     }
