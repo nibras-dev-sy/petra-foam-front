@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check, Shield, Star, Clock } from "lucide-react"
 import PlaceholderImage from "@/components/placeholder-image"
+import { getHeroData, getProductsData } from "@/lib/strapi-page-api"
 
 export default async function Home({
   params,
@@ -14,6 +15,12 @@ export default async function Home({
   const { lang } = await params
   const dictionary = await getDictionary(lang)
   const t = dictionary.homePage || {}
+  
+  // Fetch hero data from Strapi
+  const heroData = await getHeroData(lang, dictionary);
+  
+  // Fetch products data from Strapi
+  const productsData = await getProductsData(lang, dictionary);
 
   // Check if images exist
   const useRealImages = false // Set to true when real images are available
@@ -30,10 +37,10 @@ export default async function Home({
         <div className="container relative mx-auto px-4 z-10">
           <div className={`flex flex-col ${lang === "ar" ? "items-end text-right" : "items-start text-left"} max-w-3xl mx-auto`}>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              {t.hero?.title}
+              {heroData.title}
             </h1>
             <p className="text-lg text-blue-100 mb-8 max-w-2xl">
-              {t.hero?.description}
+              {heroData.description}
             </p>
             <div className={`flex ${lang === "ar" ? "flex-row-reverse" : "flex-row"} gap-4`}>
               <Button 
@@ -72,82 +79,130 @@ export default async function Home({
             </p>
           </div>
           
-          <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 mb-8`}>
-            {/* XPS Product Card */}
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:translate-y-[-8px]">
-              <div className="relative h-64">
-                {useRealImages ? (
-                  <Image 
-                    src="/images/xps-product.jpg" 
-                    alt="XPS Insulation"
-                    fill
-                    style={{ objectFit: "cover" }}
-                    className="transition-transform hover:scale-105"
-                  />
-                ) : (
-                  <PlaceholderImage 
-                    text="XPS Insulation Product"
-                    bgColor="bg-blue-600"
-                  />
-                )}
-              </div>
-              <div className={`p-6 ${lang === "ar" ? "text-right" : "text-left"}`}>
-                <h3 className="text-xl font-bold text-blue-700 mb-2">
-                  {t.products?.xps?.title}
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  {t.products?.xps?.description}
-                </p>
-                <Button 
-                  variant="default" 
-                  className={`mt-2 ${lang === "ar" ? "flex flex-row-reverse" : ""}`}
-                  asChild
+          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8`}>
+            {/* Dynamic Product Cards */}
+            {productsData.length > 0 ? (
+              productsData.map((product) => (
+                <div 
+                  key={product.id}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:translate-y-[-8px]"
                 >
-                  <Link href={`/${lang}/products/xps`}>
-                    {t.products?.viewDetailsButton}
-                    <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-            
-            {/* EPS Product Card */}
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:translate-y-[-8px]">
-              <div className="relative h-64">
-                {useRealImages ? (
-                  <Image 
-                    src="/images/eps-product.jpg" 
-                    alt="EPS Insulation"
-                    fill
-                    style={{ objectFit: "cover" }}
-                    className="transition-transform hover:scale-105"
-                  />
-                ) : (
-                  <PlaceholderImage 
-                    text="EPS Insulation Product"
-                    bgColor="bg-blue-500"
-                  />
-                )}
-              </div>
-              <div className={`p-6 ${lang === "ar" ? "text-right" : "text-left"}`}>
-                <h3 className="text-xl font-bold text-blue-700 mb-2">
-                  {t.products?.eps?.title}
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  {t.products?.eps?.description}
-                </p>
-                <Button 
-                  variant="default" 
-                  className={`mt-2 ${lang === "ar" ? "flex flex-row-reverse" : ""}`}
-                  asChild
-                >
-                  <Link href={`/${lang}/products/eps`}>
-                    {t.products?.viewDetailsButton}
-                    <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
-                  </Link>
-                </Button>
-              </div>
-            </div>
+                  <div className="relative h-64">
+                    {product.image?.url ? (
+                      <Image 
+                        src={product.image.url}
+                        alt={product.image.alt}
+                        fill
+                        style={{ objectFit: "cover" }}
+                        className="transition-transform hover:scale-105"
+                      />
+                    ) : (
+                      <PlaceholderImage 
+                        text={product.title}
+                        bgColor="bg-blue-600"
+                      />
+                    )}
+                  </div>
+                  <div className={`p-6 ${lang === "ar" ? "text-right" : "text-left"}`}>
+                    <h3 className="text-xl font-bold text-blue-700 mb-2">
+                      {product.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      {product.description}
+                    </p>
+                    <Button 
+                      variant="default" 
+                      className={`mt-2 ${lang === "ar" ? "flex flex-row-reverse" : ""}`}
+                      asChild
+                    >
+                      <Link href={`/${lang}/products/${product.id}`}>
+                        {t.products?.viewDetailsButton}
+                        <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              // Fallback to static product cards if no data from Strapi
+              <>
+                {/* XPS Product Card */}
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:translate-y-[-8px]">
+                  <div className="relative h-64">
+                    {useRealImages ? (
+                      <Image 
+                        src="/images/xps-product.jpg" 
+                        alt="XPS Insulation"
+                        fill
+                        style={{ objectFit: "cover" }}
+                        className="transition-transform hover:scale-105"
+                      />
+                    ) : (
+                      <PlaceholderImage 
+                        text="XPS Insulation Product"
+                        bgColor="bg-blue-600"
+                      />
+                    )}
+                  </div>
+                  <div className={`p-6 ${lang === "ar" ? "text-right" : "text-left"}`}>
+                    <h3 className="text-xl font-bold text-blue-700 mb-2">
+                      {t.products?.xps?.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      {t.products?.xps?.description}
+                    </p>
+                    <Button 
+                      variant="default" 
+                      className={`mt-2 ${lang === "ar" ? "flex flex-row-reverse" : ""}`}
+                      asChild
+                    >
+                      <Link href={`/${lang}/products/xps`}>
+                        {t.products?.viewDetailsButton}
+                        <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+                
+                {/* EPS Product Card */}
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:translate-y-[-8px]">
+                  <div className="relative h-64">
+                    {useRealImages ? (
+                      <Image 
+                        src="/images/eps-product.jpg" 
+                        alt="EPS Insulation"
+                        fill
+                        style={{ objectFit: "cover" }}
+                        className="transition-transform hover:scale-105"
+                      />
+                    ) : (
+                      <PlaceholderImage 
+                        text="EPS Insulation Product"
+                        bgColor="bg-blue-500"
+                      />
+                    )}
+                  </div>
+                  <div className={`p-6 ${lang === "ar" ? "text-right" : "text-left"}`}>
+                    <h3 className="text-xl font-bold text-blue-700 mb-2">
+                      {t.products?.eps?.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      {t.products?.eps?.description}
+                    </p>
+                    <Button 
+                      variant="default" 
+                      className={`mt-2 ${lang === "ar" ? "flex flex-row-reverse" : ""}`}
+                      asChild
+                    >
+                      <Link href={`/${lang}/products/eps`}>
+                        {t.products?.viewDetailsButton}
+                        <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
           
           <div className="text-center">

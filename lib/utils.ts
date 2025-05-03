@@ -1,6 +1,14 @@
-import { clsx, type ClassValue } from "clsx"
+import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+/**
+ * Environment configuration for Strapi API
+ */
+export const env = {
+  STRAPI_API_URL: process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337",
+  STRAPI_API_TOKEN: process.env.STRAPI_API_TOKEN || "5807bc8fb713c0d79e1be238881a8a66bb44ab8de3983262ebcfcca2f3559fa157181b453635ff776768549b9f82d7980079d62888df2bbe69e34e5e56147ac17be2290001f54550776e4580bcc0c29f372f4ea1e23408d75321fe65bb6a446583f07844cab5ccfdf64a1ea30a0745d34e93e976c78f2eddd4a7567ea980c90d",
 }

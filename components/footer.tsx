@@ -9,6 +9,7 @@ import type { Locale } from "@/lib/i18n-config"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import PlaceholderLogo from "./placeholder-logo"
+import { useStrapiData } from "@/hooks/use-strapi-data"
 
 export default function Footer({
   lang,
@@ -19,6 +20,12 @@ export default function Footer({
 }) {
   const [email, setEmail] = useState("")
   const [logoExists, setLogoExists] = useState(false)
+  
+  // Fetch footer data from Strapi
+  const { data: footerData, isLoading } = useStrapiData<any>({
+    endpoint: "/api/footer",
+    locale: lang
+  });
 
   useEffect(() => {
     // Check if logo exists (this will only run on client-side)
@@ -40,6 +47,12 @@ export default function Footer({
   const isRtl = lang === "ar"
   const t = dictionary.footer || {}
   const nav = dictionary.navigation || {}
+  
+  // Use Strapi data if available, otherwise fallback to dictionary
+  const companyDescription = footerData?.data?.companyDescription || t.company?.description;
+  const contactPhone = footerData?.data?.contactPhone || t.contactInfo?.phone;
+  const contactEmail = footerData?.data?.contactEmail || t.contactInfo?.email;
+  const contactAddress = footerData?.data?.contactAddress || t.contactInfo?.address;
 
   return (
     <footer className="bg-gray-900 text-white pt-16 pb-8">
@@ -66,7 +79,7 @@ export default function Footer({
                 />
               )}
               <p className="text-gray-400 mb-6">
-                {t.company?.description}
+                {companyDescription}
               </p>
             </div>
             <div className="flex space-x-4 mb-6">
@@ -136,15 +149,15 @@ export default function Footer({
             <ul className="space-y-4">
               <li className={`flex ${isRtl ? "flex-row-reverse" : ""} items-start`}>
                 <Phone className={`${isRtl ? "mr-0 ml-3" : "mr-3"} text-blue-500 mt-1`} size={18} />
-                <span className="text-gray-400">{t.contactInfo?.phone}</span>
+                <span className="text-gray-400">{contactPhone}</span>
               </li>
               <li className={`flex ${isRtl ? "flex-row-reverse" : ""} items-start`}>
                 <Mail className={`${isRtl ? "mr-0 ml-3" : "mr-3"} text-blue-500 mt-1`} size={18} />
-                <span className="text-gray-400">{t.contactInfo?.email}</span>
+                <span className="text-gray-400">{contactEmail}</span>
               </li>
               <li className={`flex ${isRtl ? "flex-row-reverse" : ""} items-start`}>
                 <MapPin className={`${isRtl ? "mr-0 ml-3" : "mr-3"} text-blue-500 mt-1`} size={18} />
-                <span className="text-gray-400">{t.contactInfo?.address}</span>
+                <span className="text-gray-400">{contactAddress}</span>
               </li>
             </ul>
           </div>
