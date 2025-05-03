@@ -25,7 +25,7 @@ export function ImageCarousel({ images, productTitle, isRTL = false }: ImageCaro
   // If no images, render placeholder
   if (!images.length) {
     return (
-      <div className="w-full h-80 md:h-96">
+      <div className="w-full max-w-xl h-80 md:h-96 mx-auto">
         <PlaceholderImage 
           text={productTitle}
           bgColor="bg-blue-600"
@@ -48,14 +48,16 @@ export function ImageCarousel({ images, productTitle, isRTL = false }: ImageCaro
   };
 
   return (
-    <div className="relative w-full max-w-lg h-80 md:h-96 group">
+    <div className="relative w-full max-w-xl h-80 md:h-96 mx-auto group">
       {/* Current Image */}
       <div className="relative w-full h-full overflow-hidden rounded-lg shadow-xl">
         <Image
           src={images[currentIndex].url}
           alt={images[currentIndex].alt}
           fill
-          className="object-cover"
+          className="object-cover object-center"
+          sizes="(max-width: 768px) 100vw, 50vw"
+          priority={currentIndex === 0} // Prioritize loading the first image
         />
       </div>
 
@@ -64,14 +66,14 @@ export function ImageCarousel({ images, productTitle, isRTL = false }: ImageCaro
         <>
           <button
             onClick={goToPrevious}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white/90 p-2 rounded-full shadow-md transform transition opacity-0 group-hover:opacity-100"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white/90 p-2 rounded-full shadow-md transform transition opacity-70 hover:opacity-100"
             aria-label="Previous image"
           >
             <ChevronLeft className={`w-5 h-5 text-blue-900 ${isRTL ? "rotate-180" : ""}`} />
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white/90 p-2 rounded-full shadow-md transform transition opacity-0 group-hover:opacity-100"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white/90 p-2 rounded-full shadow-md transform transition opacity-70 hover:opacity-100"
             aria-label="Next image"
           >
             <ChevronRight className={`w-5 h-5 text-blue-900 ${isRTL ? "rotate-180" : ""}`} />
@@ -81,7 +83,7 @@ export function ImageCarousel({ images, productTitle, isRTL = false }: ImageCaro
 
       {/* Image Counter */}
       {images.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-2 py-1 rounded-full text-xs">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-xs font-medium">
           {currentIndex + 1} / {images.length}
         </div>
       )}

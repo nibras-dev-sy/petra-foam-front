@@ -43,16 +43,16 @@ export default async function ProductsPage({
       </section>
 
       {/* Products Sections */}
-      <div className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          {productsData.length > 0 ? (
-            productsData.map((product, index) => (
-              <section 
-                key={product.id} 
-                id={`product-${product.id}`} 
-                className={`py-16 ${index !== 0 ? "border-t border-gray-200" : ""}`}
-              >
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <div>
+        {productsData.length > 0 ? (
+          productsData.map((product, index) => (
+            <section 
+              key={product.id} 
+              id={`product-${product.id}`} 
+              className={`py-16 ${index !== 0 ? "border-t border-gray-200" : ""} ${index % 2 === 0 ? "bg-white" : "bg-gray-100"}`}
+            >
+              <div className="container mx-auto px-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                   {/* Content Section */}
                   <div className={`space-y-6 ${index % 2 === 0 ? isRTL ? "lg:order-2" : "lg:order-1" : isRTL ? "lg:order-1" : "lg:order-2"}`}>
                     <h2 className="text-3xl font-bold text-blue-900">
@@ -63,7 +63,7 @@ export default async function ProductsPage({
                     </p>
                     
                     {product.details && Object.keys(product.details).length > 0 && (
-                      <div className="bg-white rounded-lg shadow-lg p-6">
+                      <div className={`rounded-lg shadow-lg p-6 ${index % 2 === 0 ? "bg-white" : "bg-white"}`}>
                         <h3 className="text-xl font-semibold text-blue-900 mb-4">
                           {t.specificationsTitle || "Technical Specifications"}
                         </h3>
@@ -81,7 +81,6 @@ export default async function ProductsPage({
                     )}
                     
                     <div className="flex flex-wrap gap-4">
-                      
                       {product.catalogue && (
                         <Button 
                           variant="default" 
@@ -110,13 +109,16 @@ export default async function ProductsPage({
                     />
                   </div>
                 </div>
-              </section>
-            ))
-          ) : (
-            <>
-            </>
-          )}
-        </div>
+              </div>
+            </section>
+          ))
+        ) : (
+          <div className="container mx-auto px-4">
+            <div className="text-center py-16">
+              <p className="text-gray-500">{t.noProductsFound || "No products found."}</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

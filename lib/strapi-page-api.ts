@@ -79,7 +79,8 @@ export async function getProductsData(lang: Locale, dictionary: any): Promise<an
           description: product.short_description || product.description,
           details: product.details || {},
           images: images,
-          catalogue: catalogue
+          catalogue: catalogue,
+          image: images[0]
         };
       });
     }
