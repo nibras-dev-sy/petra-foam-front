@@ -1,5 +1,5 @@
 import { Locale } from './i18n-config';
-import { getHomePageData, getProductsData as fetchProductsData, getProjectsData as fetchProjectsData } from './services/strapi';
+import { getHomePageData, getProductsData as fetchProductsData, getProjectsData as fetchProjectsData, getAboutUsData } from './services/strapi';
 import { getStrapiMediaUrl } from './services/media';
 
 /**
@@ -136,5 +136,35 @@ export async function getProjectsData(lang: Locale, dictionary: any): Promise<an
     console.error('Error getting projects data:', error);
     // Fallback to empty array
     return [];
+  }
+}
+
+/**
+ * Get about us data from Strapi or use fallback dictionary
+ */
+export async function getAboutUsInfo(lang: Locale, dictionary: any) {
+  try {
+    const aboutUsData = await getAboutUsData(lang);
+    
+    // If data exists, return it
+    if (aboutUsData?.data) {
+      return {
+        title: aboutUsData.data.title || dictionary.aboutUsPage?.title,
+        description: aboutUsData.data.description || dictionary.aboutUsPage?.description,
+      };
+    }
+    
+    // Fallback to dictionary
+    return {
+      title: dictionary.aboutUsPage?.title,
+      description: dictionary.aboutUsPage?.description,
+    };
+  } catch (error) {
+    console.error('Error getting about us data:', error);
+    // Fallback to dictionary
+    return {
+      title: dictionary.aboutUsPage?.title,
+      description: dictionary.aboutUsPage?.description,
+    };
   }
 } 

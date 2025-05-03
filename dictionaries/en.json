@@ -36,6 +36,61 @@
       "waterAbsorption": "Water Absorption"
     }
   },
+  "aboutUsPage": {
+    "title": "Who We Are",
+    "description": "Petra Foam is Jordan's premier manufacturer of industrial insulation solutions. With over a decade of experience, we've established ourselves as a trusted partner in providing high-quality insulation materials for both residential and commercial applications.\n\nOur commitment to innovation and sustainability drives us to deliver products that meet the highest international standards while supporting Jordan's growing construction and industrial sectors.",
+    "modernFacility": "Our Modern Facility",
+    "facilityDescription": "State-of-the-art manufacturing plant producing high-quality insulation materials",
+    "timeline": {
+      "title": "Our Journey",
+      "description": "A brief history of our milestones and achievements over the years",
+      "events": [
+        {
+          "year": "2011",
+          "title": "Foundation",
+          "description": "Established Petra Foam as a specialized insulation materials manufacturer"
+        },
+        {
+          "year": "2018",
+          "title": "Production Expansion",
+          "description": "Expanded our production capacity to meet growing regional demand"
+        },
+        {
+          "year": "2020",
+          "title": "ISO Certification",
+          "description": "Received ISO certification for quality management systems"
+        },
+        {
+          "year": "2021",
+          "title": "EPS Manufacturing",
+          "description": "Started production of Expanded Polystyrene (EPS) insulation products"
+        },
+        {
+          "year": "2023",
+          "title": "Regional Expansion",
+          "description": "Expanded distribution to neighboring countries and launched new product lines"
+        }
+      ]
+    },
+    "values": {
+      "title": "Our Values",
+      "description": "The core principles that guide our business and operations",
+      "items": [
+        {
+          "title": "Quality",
+          "description": "Commitment to delivering premium insulation solutions that meet international standards"
+        },
+        {
+          "title": "Innovation",
+          "description": "Continuously improving our products and processes through research and development"
+        },
+        {
+          "title": "Sustainability",
+          "description": "Committed to environmental responsibility in our production processes"
+        }
+      ]
+    }
+  },
   "homePage": {
     "hero": {
       "title": "Advanced Thermal Insulation Solutions",
