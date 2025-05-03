@@ -43,42 +43,86 @@ export default async function Home({
   const projectsGridClass = getGridClass(projectsData.length || 3); // Use 3 as fallback for static content
 
   return (
-    <div className="w-full">
-      {/* Section 1: Hero Header with Blue Gradient */}
-      <section className="relative w-full py-24 md:py-32 bg-gradient-to-br from-blue-600 to-blue-900 overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 right-0 h-40 bg-white/20"></div>
-          <div className="absolute -bottom-8 -left-8 w-64 h-64 rounded-full bg-blue-500/30"></div>
-          <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full bg-blue-400/20"></div>
+    <div className={`w-full ${lang === "ar" ? "rtl" : "ltr"}`}>
+      {/* Section 1: Hero Header with Modern Design */}
+      <section className="relative w-full min-h-[600px] flex items-center bg-gradient-to-r from-blue-800 to-blue-600 overflow-hidden">
+        {/* Background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-900 opacity-20 rounded-full scale-150 blur-3xl"></div>
+          <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-400 opacity-20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-blue-500 opacity-10 rounded-full blur-3xl"></div>
+          
+          {/* Grid pattern overlay */}
+          <div className="absolute inset-0 bg-grid-white/[0.05] bg-[length:40px_40px]"></div>
         </div>
-        <div className="container relative mx-auto px-4 z-10">
-          <div className={`flex flex-col ${lang === "ar" ? "items-end text-right" : "items-start text-left"} max-w-3xl mx-auto`}>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              {heroData.title}
-            </h1>
-            <p className="text-lg text-blue-100 mb-8 max-w-2xl">
-              {heroData.description}
-            </p>
-            <div className={`flex ${lang === "ar" ? "flex-row-reverse" : "flex-row"} gap-4`}>
-              <Button 
-                size="lg" 
-                className="bg-white text-blue-700 hover:bg-blue-50"
-                asChild
-              >
-                <Link href={`/${lang}/products`}>
-                  {t.hero?.exploreButton}
-                </Link>
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="text-white border-white hover:bg-white/20"
-                asChild
-              >
-                <Link href={`/${lang}/contact-us`}>
-                  {t.hero?.contactButton}
-                </Link>
-              </Button>
+        
+        <div className="container relative mx-auto px-4 z-10 py-20 md:py-28">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className={`text-white ${lang === "ar" ? "md:order-2 text-right" : "md:order-1 text-left"}`}>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                {heroData.title}
+              </h1>
+              <p className="text-lg md:text-xl text-blue-100 mb-8 max-w-xl">
+                {heroData.description}
+              </p>
+              <div className={`flex flex-wrap gap-4 ${lang === "ar" ? "justify-end md:justify-start md:flex-row-reverse" : ""}`}>
+                <Button 
+                  size="lg" 
+                  className="bg-white text-blue-700 hover:bg-blue-50 font-medium px-6"
+                  asChild
+                >
+                  <Link href={`/${lang}/products`}>
+                    {t.hero?.exploreButton}
+                  </Link>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="text-white border-white hover:bg-white/10 font-medium px-6"
+                  asChild
+                >
+                  <Link href={`/${lang}/contact-us`}>
+                    {t.hero?.contactButton}
+                  </Link>
+                </Button>
+              </div>
+            </div>
+            
+            <div className={`relative ${lang === "ar" ? "md:order-1" : "md:order-2"} flex justify-center`}>
+              <div className="w-full h-80 md:h-96 lg:h-[450px] relative">
+                <div className="absolute inset-0 bg-blue-700/30 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl transform rotate-1">
+                  {heroData.headerImage ? (
+                    <>
+                      <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent z-10"></div>
+                      <Image 
+                        src={heroData.headerImage}
+                        alt={heroData.headerImageAlt}
+                        fill
+                        priority
+                        className="object-cover mix-blend-normal"
+                      />
+                    </>
+                  ) : useRealImages ? (
+                    <Image 
+                      src="/images/hero-building.jpg" 
+                      alt="Modern building with thermal insulation"
+                      fill
+                      priority
+                      className="object-cover opacity-90 mix-blend-overlay"
+                    />
+                  ) : (
+                    <div className="w-full h-full relative flex items-center justify-center">
+                      <div className="absolute inset-0 bg-blue-600/50"></div>
+                      <div className="relative z-10 text-white text-center px-6">
+                        <div className="w-24 h-24 mx-auto mb-4 bg-white/10 rounded-full flex items-center justify-center">
+                          <Shield className="w-12 h-12 text-white" />
+                        </div>
+                        <h3 className="text-2xl font-bold">{t.hero?.imageAlt || "Thermal Insulation Solutions"}</h3>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>

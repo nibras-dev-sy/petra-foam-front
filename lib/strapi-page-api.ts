@@ -11,9 +11,15 @@ export async function getHeroData(lang: Locale, dictionary: any) {
     
     // If data exists, return it
     if (homepageData?.data) {
+      const headerImage = homepageData.data.header_image 
+        ? getStrapiMediaUrl(homepageData.data.header_image.url)
+        : null;
+        
       return {
         title: homepageData.data.title || dictionary.homePage?.hero?.title,
         description: homepageData.data.description || dictionary.homePage?.hero?.description,
+        headerImage: headerImage,
+        headerImageAlt: homepageData.data.header_image?.alternativeText || 'Petra Foam Header Image'
       };
     }
     
@@ -21,6 +27,8 @@ export async function getHeroData(lang: Locale, dictionary: any) {
     return {
       title: dictionary.homePage?.hero?.title,
       description: dictionary.homePage?.hero?.description,
+      headerImage: null,
+      headerImageAlt: 'Petra Foam Header Image'
     };
   } catch (error) {
     console.error('Error getting hero data:', error);
@@ -28,6 +36,8 @@ export async function getHeroData(lang: Locale, dictionary: any) {
     return {
       title: dictionary.homePage?.hero?.title,
       description: dictionary.homePage?.hero?.description,
+      headerImage: null,
+      headerImageAlt: 'Petra Foam Header Image'
     };
   }
 }

@@ -36,7 +36,7 @@ async function fetchAPI(endpoint: string, options = {}) {
  */
 export async function getHomePageData(locale: Locale = "en") {
   try {
-    const data = await fetchAPI(`/api/home-page?locale=${locale}`);
+    const data = await fetchAPI(`/api/home-page?populate[0]=header_image&locale=${locale}`);
     return data;
   } catch (error) {
     console.error("Error fetching home page data:", error);
