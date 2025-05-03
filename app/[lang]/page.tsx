@@ -1,13 +1,10 @@
 import { getDictionary } from "@/lib/dictionary"
 import type { Locale } from "@/lib/i18n-config"
 import Image from "next/image"
-
-interface Testimonial {
-  name: string;
-  role: string;
-  quote: string;
-  stars: number;
-}
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { ArrowRight, Check, Shield, Star, Clock } from "lucide-react"
+import PlaceholderImage from "@/components/placeholder-image"
 
 export default async function Home({
   params,
@@ -16,17 +13,365 @@ export default async function Home({
 }) {
   const { lang } = await params
   const dictionary = await getDictionary(lang)
+  const t = dictionary.homePage || {}
+
+  // Check if images exist
+  const useRealImages = false // Set to true when real images are available
 
   return (
-    <div className="container mx-auto px-4 pt-32 pb-16">
-      <h1 className="text-3xl md:text-4xl font-bold text-center text-blue-700 mb-8">
-        Petra Foam
-      </h1>
-      <p className="text-center text-lg max-w-2xl mx-auto">
-        {lang === "en" 
-          ? "Welcome to Petra Foam - Your Thermal Insulation Specialists" 
-          : "مرحبًا بكم في بترا فوم - متخصصون في العزل الحراري"}
-      </p>
+    <div className="w-full">
+      {/* Section 1: Hero Header with Blue Gradient */}
+      <section className="relative w-full py-24 md:py-32 bg-gradient-to-br from-blue-600 to-blue-900 overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 right-0 h-40 bg-white/20"></div>
+          <div className="absolute -bottom-8 -left-8 w-64 h-64 rounded-full bg-blue-500/30"></div>
+          <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full bg-blue-400/20"></div>
+        </div>
+        <div className="container relative mx-auto px-4 z-10">
+          <div className={`flex flex-col ${lang === "ar" ? "items-end text-right" : "items-start text-left"} max-w-3xl mx-auto`}>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+              {t.hero?.title}
+            </h1>
+            <p className="text-lg text-blue-100 mb-8 max-w-2xl">
+              {t.hero?.description}
+            </p>
+            <div className={`flex ${lang === "ar" ? "flex-row-reverse" : "flex-row"} gap-4`}>
+              <Button 
+                size="lg" 
+                className="bg-white text-blue-700 hover:bg-blue-50"
+                asChild
+              >
+                <Link href={`/${lang}/products`}>
+                  {t.hero?.exploreButton}
+                </Link>
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="text-white border-white hover:bg-white/20"
+                asChild
+              >
+                <Link href={`/${lang}/contact-us`}>
+                  {t.hero?.contactButton}
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 2: Products Overview */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12`}>
+            <h2 className="text-3xl md:text-4xl font-bold text-blue-700 mb-4">
+              {t.products?.title}
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              {t.products?.description}
+            </p>
+          </div>
+          
+          <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 mb-8`}>
+            {/* XPS Product Card */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:translate-y-[-8px]">
+              <div className="relative h-64">
+                {useRealImages ? (
+                  <Image 
+                    src="/images/xps-product.jpg" 
+                    alt="XPS Insulation"
+                    fill
+                    style={{ objectFit: "cover" }}
+                    className="transition-transform hover:scale-105"
+                  />
+                ) : (
+                  <PlaceholderImage 
+                    text="XPS Insulation Product"
+                    bgColor="bg-blue-600"
+                  />
+                )}
+              </div>
+              <div className={`p-6 ${lang === "ar" ? "text-right" : "text-left"}`}>
+                <h3 className="text-xl font-bold text-blue-700 mb-2">
+                  {t.products?.xps?.title}
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  {t.products?.xps?.description}
+                </p>
+                <Button 
+                  variant="default" 
+                  className={`mt-2 ${lang === "ar" ? "flex flex-row-reverse" : ""}`}
+                  asChild
+                >
+                  <Link href={`/${lang}/products/xps`}>
+                    {t.products?.viewDetailsButton}
+                    <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+            
+            {/* EPS Product Card */}
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:translate-y-[-8px]">
+              <div className="relative h-64">
+                {useRealImages ? (
+                  <Image 
+                    src="/images/eps-product.jpg" 
+                    alt="EPS Insulation"
+                    fill
+                    style={{ objectFit: "cover" }}
+                    className="transition-transform hover:scale-105"
+                  />
+                ) : (
+                  <PlaceholderImage 
+                    text="EPS Insulation Product"
+                    bgColor="bg-blue-500"
+                  />
+                )}
+              </div>
+              <div className={`p-6 ${lang === "ar" ? "text-right" : "text-left"}`}>
+                <h3 className="text-xl font-bold text-blue-700 mb-2">
+                  {t.products?.eps?.title}
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  {t.products?.eps?.description}
+                </p>
+                <Button 
+                  variant="default" 
+                  className={`mt-2 ${lang === "ar" ? "flex flex-row-reverse" : ""}`}
+                  asChild
+                >
+                  <Link href={`/${lang}/products/eps`}>
+                    {t.products?.viewDetailsButton}
+                    <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-center">
+            <Button 
+              variant="outline" 
+              className="mt-4"
+              asChild
+            >
+              <Link href={`/${lang}/products`}>
+                {t.products?.viewAllButton}
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 3: Quality Features */}
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12`}>
+            <h2 className="text-3xl md:text-4xl font-bold text-blue-700 mb-4">
+              {t.features?.title}
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              {t.features?.description}
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Feature 1 */}
+            <div className={`bg-white p-8 rounded-xl shadow-md ${lang === "ar" ? "text-right" : ""}`}>
+              <div className={`flex ${lang === "ar" ? "flex-row-reverse" : ""} items-center mb-4`}>
+                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-700">
+                  <Shield className="w-6 h-6" />
+                </div>
+                <h3 className={`text-xl font-bold text-gray-900 ${lang === "ar" ? "mr-4" : "ml-4"}`}>
+                  {t.features?.quality?.title}
+                </h3>
+              </div>
+              <p className="text-gray-600">
+                {t.features?.quality?.description}
+              </p>
+            </div>
+            
+            {/* Feature 2 */}
+            <div className={`bg-white p-8 rounded-xl shadow-md ${lang === "ar" ? "text-right" : ""}`}>
+              <div className={`flex ${lang === "ar" ? "flex-row-reverse" : ""} items-center mb-4`}>
+                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-700">
+                  <Star className="w-6 h-6" />
+                </div>
+                <h3 className={`text-xl font-bold text-gray-900 ${lang === "ar" ? "mr-4" : "ml-4"}`}>
+                  {t.features?.performance?.title}
+                </h3>
+              </div>
+              <p className="text-gray-600">
+                {t.features?.performance?.description}
+              </p>
+            </div>
+            
+            {/* Feature 3 */}
+            <div className={`bg-white p-8 rounded-xl shadow-md ${lang === "ar" ? "text-right" : ""}`}>
+              <div className={`flex ${lang === "ar" ? "flex-row-reverse" : ""} items-center mb-4`}>
+                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-700">
+                  <Clock className="w-6 h-6" />
+                </div>
+                <h3 className={`text-xl font-bold text-gray-900 ${lang === "ar" ? "mr-4" : "ml-4"}`}>
+                  {t.features?.service?.title}
+                </h3>
+              </div>
+              <p className="text-gray-600">
+                {t.features?.service?.description}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 4: Projects */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12`}>
+            <h2 className="text-3xl md:text-4xl font-bold text-blue-700 mb-4">
+              {t.projects?.title}
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              {t.projects?.description}
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+            {/* Project 1 */}
+            <div className="group bg-white rounded-xl shadow-lg overflow-hidden">
+              <div className="relative h-64">
+                {useRealImages ? (
+                  <Image 
+                    src="/images/project1.jpg" 
+                    alt="Commercial Building Project"
+                    fill
+                    style={{ objectFit: "cover" }}
+                    className="transition-transform group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="relative h-full">
+                    <PlaceholderImage 
+                      text="Commercial Building Project"
+                      bgColor="bg-blue-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  </div>
+                )}
+                <div className={`absolute bottom-0 ${lang === "ar" ? "right-0" : "left-0"} p-4 w-full z-10`}>
+                  <h3 className="text-xl font-bold text-white">
+                    {t.projects?.project1?.title}
+                  </h3>
+                </div>
+              </div>
+              <div className={`p-4 ${lang === "ar" ? "text-right" : ""}`}>
+                <p className="text-gray-600 mb-4">
+                  {t.projects?.project1?.description}
+                </p>
+                <Link 
+                  href={`/${lang}/projects/commercial-building`} 
+                  className={`text-blue-700 font-medium inline-flex items-center ${lang === "ar" ? "flex-row-reverse" : ""}`}
+                >
+                  {t.projects?.viewProjectButton}
+                  <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
+                </Link>
+              </div>
+            </div>
+            
+            {/* Project 2 */}
+            <div className="group bg-white rounded-xl shadow-lg overflow-hidden">
+              <div className="relative h-64">
+                {useRealImages ? (
+                  <Image 
+                    src="/images/project2.jpg" 
+                    alt="Residential Complex Project"
+                    fill
+                    style={{ objectFit: "cover" }}
+                    className="transition-transform group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="relative h-full">
+                    <PlaceholderImage 
+                      text="Residential Complex Project"
+                      bgColor="bg-blue-600"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  </div>
+                )}
+                <div className={`absolute bottom-0 ${lang === "ar" ? "right-0" : "left-0"} p-4 w-full z-10`}>
+                  <h3 className="text-xl font-bold text-white">
+                    {t.projects?.project2?.title}
+                  </h3>
+                </div>
+              </div>
+              <div className={`p-4 ${lang === "ar" ? "text-right" : ""}`}>
+                <p className="text-gray-600 mb-4">
+                  {t.projects?.project2?.description}
+                </p>
+                <Link 
+                  href={`/${lang}/projects/residential-complex`} 
+                  className={`text-blue-700 font-medium inline-flex items-center ${lang === "ar" ? "flex-row-reverse" : ""}`}
+                >
+                  {t.projects?.viewProjectButton}
+                  <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
+                </Link>
+              </div>
+            </div>
+            
+            {/* Project 3 */}
+            <div className="group bg-white rounded-xl shadow-lg overflow-hidden">
+              <div className="relative h-64">
+                {useRealImages ? (
+                  <Image 
+                    src="/images/project3.jpg" 
+                    alt="Hotel Project"
+                    fill
+                    style={{ objectFit: "cover" }}
+                    className="transition-transform group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="relative h-full">
+                    <PlaceholderImage 
+                      text="Luxury Hotel Project"
+                      bgColor="bg-blue-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  </div>
+                )}
+                <div className={`absolute bottom-0 ${lang === "ar" ? "right-0" : "left-0"} p-4 w-full z-10`}>
+                  <h3 className="text-xl font-bold text-white">
+                    {t.projects?.project3?.title}
+                  </h3>
+                </div>
+              </div>
+              <div className={`p-4 ${lang === "ar" ? "text-right" : ""}`}>
+                <p className="text-gray-600 mb-4">
+                  {t.projects?.project3?.description}
+                </p>
+                <Link 
+                  href={`/${lang}/projects/luxury-hotel`} 
+                  className={`text-blue-700 font-medium inline-flex items-center ${lang === "ar" ? "flex-row-reverse" : ""}`}
+                >
+                  {t.projects?.viewProjectButton}
+                  <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
+                </Link>
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-center">
+            <Button 
+              variant="outline" 
+              className="mt-4"
+              asChild
+            >
+              <Link href={`/${lang}/projects`}>
+                {t.projects?.viewAllButton}
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

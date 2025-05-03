@@ -8,5 +8,82 @@
   },
   "languageSwitcher": {
     "switchTo": "Switch to"
+  },
+  "homePage": {
+    "hero": {
+      "title": "Advanced Thermal Insulation Solutions",
+      "description": "Petra Foam provides the best thermal insulation products to improve energy efficiency and reduce costs in construction projects",
+      "exploreButton": "Explore Our Products",
+      "contactButton": "Contact Us"
+    },
+    "products": {
+      "title": "Our Products",
+      "description": "We offer high-quality thermal insulation solutions designed to meet your project needs",
+      "xps": {
+        "title": "Extruded Polystyrene Boards (XPS)",
+        "description": "Advanced thermal insulation boards with high density and moisture resistance, ideal for roofs and walls"
+      },
+      "eps": {
+        "title": "Expanded Polystyrene Boards (EPS)",
+        "description": "Lightweight and cost-effective thermal insulation solution, ideal for residential and commercial applications"
+      },
+      "viewDetailsButton": "View Details",
+      "viewAllButton": "View All Products"
+    },
+    "features": {
+      "title": "Why Choose Petra Foam",
+      "description": "We are committed to providing high-quality products and exceptional service to our customers",
+      "quality": {
+        "title": "Quality Guaranteed",
+        "description": "Our products are tested and certified to the highest international standards"
+      },
+      "performance": {
+        "title": "Superior Performance",
+        "description": "Our products provide exceptional thermal insulation performance and energy savings"
+      },
+      "service": {
+        "title": "Fast Service",
+        "description": "We offer quick response, technical consultation, and on-time delivery"
+      }
+    },
+    "projects": {
+      "title": "Our Projects",
+      "description": "Discover our featured thermal insulation projects",
+      "project1": {
+        "title": "Commercial Building - Amman",
+        "description": "Installation of XPS boards for roof and wall insulation in a modern commercial building"
+      },
+      "project2": {
+        "title": "Residential Complex - Irbid",
+        "description": "Comprehensive thermal insulation for a large residential complex using EPS products"
+      },
+      "project3": {
+        "title": "Luxury Hotel - Dead Sea",
+        "description": "Integrated thermal insulation solutions for a luxury hotel in the Dead Sea area"
+      },
+      "viewProjectButton": "View Project",
+      "viewAllButton": "View All Projects"
+    }
+  },
+  "footer": {
+    "company": {
+      "description": "Providing high-quality thermal insulation products to improve energy efficiency in your construction projects"
+    },
+    "quickLinks": {
+      "title": "Quick Links"
+    },
+    "contactInfo": {
+      "title": "Contact Info",
+      "phone": "+962 6 123 4567",
+      "email": "info@petrafoam.com",
+      "address": "Amman, Jordan"
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "description": "Subscribe to our newsletter for the latest updates",
+      "placeholder": "Your Email",
+      "button": "Subscribe"
+    },
+    "copyright": "© {year} Petra Foam. All Rights Reserved."
   }
 }
