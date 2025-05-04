@@ -5,6 +5,11 @@ const API_URL = env.STRAPI_API_URL;
 const API_TOKEN = env.STRAPI_API_TOKEN;
 
 /**
+ * Check if we're in build mode
+ */
+const isBuildTime = process.env.NODE_ENV === 'production' && typeof window === 'undefined';
+
+/**
  * Fetch data from Strapi API
  */
 async function fetchAPI(endpoint: string, options = {}) {
@@ -20,15 +25,20 @@ async function fetchAPI(endpoint: string, options = {}) {
     ...options,
   };
 
-  const response = await fetch(`${API_URL}${endpoint}`, mergedOptions);
-  
-  if (!response.ok) {
-    console.error(`Error fetching from Strapi: ${response.statusText}`);
+  try {
+    const response = await fetch(`${API_URL}${endpoint}`, mergedOptions);
+    
+    if (!response.ok) {
+      console.error(`Error fetching from Strapi: ${response.statusText}`);
+      return null;
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Failed to fetch from ${API_URL}${endpoint}:`, error);
     return null;
   }
-  
-  const data = await response.json();
-  return data;
 }
 
 /**
@@ -36,6 +46,11 @@ async function fetchAPI(endpoint: string, options = {}) {
  */
 export async function getHomePageData(locale: Locale = "en") {
   try {
+    // During build, return null if we're having connection issues
+    if (isBuildTime) {
+      return null;
+    }
+    
     const data = await fetchAPI(`/api/home-page?populate[0]=header_image&locale=${locale}`);
     return data;
   } catch (error) {
@@ -45,28 +60,19 @@ export async function getHomePageData(locale: Locale = "en") {
 }
 
 /**
- * Get footer data from Strapi
- */
-export async function getFooterData(locale: Locale = "en") {
-  try {
-    const data = await fetchAPI(`/api/footer?locale=${locale}`);
-    return data;
-  } catch (error) {
-    console.error("Error fetching footer data:", error);
-    return null;
-  }
-}
-
-/**
  * Get products data from Strapi
  */
 export async function getProductsData(locale: Locale = "en") {
   try {
+    if (isBuildTime) {
+      return { data: [] };
+    }
+    
     const data = await fetchAPI(`/api/products?populate[0]=images&populate[1]=catalogue&locale=${locale}`);
     return data;
   } catch (error) {
     console.error("Error fetching products data:", error);
-    return null;
+    return { data: [] };
   }
 }
 
@@ -75,11 +81,15 @@ export async function getProductsData(locale: Locale = "en") {
  */
 export async function getProjectsData(locale: Locale = "en") {
   try {
+    if (isBuildTime) {
+      return { data: [] };
+    }
+    
     const data = await fetchAPI(`/api/projects?populate[0]=images&locale=${locale}`);
     return data;
   } catch (error) {
     console.error("Error fetching projects data:", error);
-    return null;
+    return { data: [] };
   }
 }
 
@@ -88,6 +98,10 @@ export async function getProjectsData(locale: Locale = "en") {
  */
 export async function getAboutUsData(locale: Locale = "en") {
   try {
+    if (isBuildTime) {
+      return null;
+    }
+    
     const data = await fetchAPI(`/api/about-us-info?locale=${locale}`);
     return data;
   } catch (error) {
