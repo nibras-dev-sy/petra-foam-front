@@ -5,11 +5,6 @@ const API_URL = env.STRAPI_API_URL;
 const API_TOKEN = env.STRAPI_API_TOKEN;
 
 /**
- * Check if we're in build mode
- */
-const isBuildTime = process.env.NODE_ENV === 'production' && typeof window === 'undefined';
-
-/**
  * Fetch data from Strapi API
  */
 async function fetchAPI(endpoint: string, options = {}) {
@@ -46,11 +41,6 @@ async function fetchAPI(endpoint: string, options = {}) {
  */
 export async function getHomePageData(locale: Locale = "en") {
   try {
-    // During build, return null if we're having connection issues
-    if (isBuildTime) {
-      return null;
-    }
-    
     const data = await fetchAPI(`/api/home-page?populate[0]=header_image&locale=${locale}`);
     return data;
   } catch (error) {
@@ -64,10 +54,6 @@ export async function getHomePageData(locale: Locale = "en") {
  */
 export async function getProductsData(locale: Locale = "en") {
   try {
-    if (isBuildTime) {
-      return { data: [] };
-    }
-    
     const data = await fetchAPI(`/api/products?populate[0]=images&populate[1]=catalogue&locale=${locale}`);
     return data;
   } catch (error) {
@@ -81,10 +67,6 @@ export async function getProductsData(locale: Locale = "en") {
  */
 export async function getProjectsData(locale: Locale = "en") {
   try {
-    if (isBuildTime) {
-      return { data: [] };
-    }
-    
     const data = await fetchAPI(`/api/projects?populate[0]=images&locale=${locale}`);
     return data;
   } catch (error) {
@@ -98,10 +80,6 @@ export async function getProjectsData(locale: Locale = "en") {
  */
 export async function getAboutUsData(locale: Locale = "en") {
   try {
-    if (isBuildTime) {
-      return null;
-    }
-    
     const data = await fetchAPI(`/api/about-us-info?locale=${locale}`);
     return data;
   } catch (error) {
