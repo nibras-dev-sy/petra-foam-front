@@ -240,11 +240,11 @@ export default async function Home({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Feature 1 */}
             <div className={`bg-white p-8 rounded-xl shadow-md`}>
-              <div className={`flex  items-center mb-4`}>
+              <div className={`flex items-center mb-4`}>
                 <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-700">
                   <Shield className="w-6 h-6" />
                 </div>
-                <h3 className={`text-xl font-bold text-gray-900`}>
+                <h3 className={`ml-4 text-xl font-bold text-gray-900`}>
                   {t.features?.quality?.title}
                 </h3>
               </div>
@@ -255,11 +255,11 @@ export default async function Home({
             
             {/* Feature 2 */}
             <div className={`bg-white p-8 rounded-xl shadow-md`}>
-              <div className={`flex  items-center mb-4`}>
+              <div className={`flex items-center mb-4`}>
                 <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-700">
                   <Star className="w-6 h-6" />
                 </div>
-                <h3 className={`text-xl font-bold text-gray-900`}>
+                <h3 className={`ml-4 text-xl font-bold text-gray-900`}>
                   {t.features?.performance?.title}
                 </h3>
               </div>
@@ -270,11 +270,11 @@ export default async function Home({
             
             {/* Feature 3 */}
             <div className={`bg-white p-8 rounded-xl shadow-md`}>
-              <div className={`flex  items-center mb-4`}>
+              <div className={`flex items-center mb-4`}>
                 <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-700">
                   <Clock className="w-6 h-6" />
                 </div>
-                <h3 className={`text-xl font-bold text-gray-900`}>
+                <h3 className={`ml-4 text-xl font-bold text-gray-900`}>
                   {t.features?.service?.title}
                 </h3>
               </div>

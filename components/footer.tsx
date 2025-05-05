@@ -136,15 +136,15 @@ export default function Footer({
             <ul className="space-y-4">
               <li className={`flex items-start`}>
                 <Phone className={`text-blue-500 mt-1`} size={18} />
-                <span className="text-gray-400">{contactPhone}</span>
+                <span className="text-gray-400 ml-4" dir="ltr">{contactPhone}</span>
               </li>
               <li className={`flex items-start`}>
                 <Mail className={`text-blue-500 mt-1`} size={18} />
-                <span className="text-gray-400">{contactEmail}</span>
+                <span className="text-gray-400 ml-4">{contactEmail}</span>
               </li>
               <li className={`flex items-start`}>
                 <MapPin className={`text-blue-500 mt-1`} size={18} />
-                <span className="text-gray-400">{contactAddress}</span>
+                <span className="text-gray-400 ml-4">{contactAddress}</span>
               </li>
             </ul>
           </div>
