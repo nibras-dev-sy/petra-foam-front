@@ -1,5 +1,5 @@
 import { Locale } from './i18n-config';
-import { getHomePageData, getProductsData as fetchProductsData, getProjectsData as fetchProjectsData, getAboutUsData } from './services/strapi';
+import { getHomePageData, getProductsData as fetchProductsData, getProjectsData as fetchProjectsData, getAboutUsData, getContactInfoData } from './services/strapi';
 import { getStrapiMediaUrl } from './services/media';
 
 /**
@@ -197,7 +197,6 @@ export async function getAboutUsInfo(lang: Locale, dictionary: any) {
 // Function to get contact info from Strapi API
 export async function getContactInfo(lang: Locale, dictionary: any) {
   try {
-    const { getContactInfoData } = await import("./services/strapi");
     const contactData = await getContactInfoData(lang);
     
     if (!contactData?.data) {
