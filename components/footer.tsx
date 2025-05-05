@@ -7,30 +7,16 @@ import { useState, useEffect } from "react"
 import { Facebook, Instagram, Mail, Phone, MapPin } from "lucide-react"
 import type { Locale } from "@/lib/i18n-config"
 import PlaceholderLogo from "./placeholder-logo"
-import { useStrapiData } from "@/hooks/use-strapi-data"
+import { getContactInfo, getHeroData } from "@/lib/strapi-page-api"
 
-export default function Footer({
+export default async function Footer({
   lang,
   dictionary,
 }: {
   lang: Locale
   dictionary: any
 }) {
-  const [logoExists, setLogoExists] = useState(false)
-
-  // Fetch contact info from Strapi (same API as contact page)
-  const { data: contactData } = useStrapiData<any>({
-    endpoint: "/api/contact-info",
-    locale: lang
-  });
-
-  useEffect(() => {
-    // Check if logo exists (this will only run on client-side)
-    const img = document.createElement('img')
-    img.onload = () => setLogoExists(true)
-    img.onerror = () => setLogoExists(false)
-    img.src = "/images/logo1.png"
-  }, [])
+  const contactData = await getContactInfo(lang, dictionary);
 
   const currentYear = new Date().getFullYear()
   const isRtl = lang === "ar"
@@ -39,9 +25,9 @@ export default function Footer({
   
   // Get contact info from the contact API, fallback to footer data if not available, then to dictionary
   const companyDescription = t.company?.description;
-  const contactPhone = contactData?.data?.phone1 || t.contactInfo?.phone;
-  const contactEmail = contactData?.data?.email1 || t.contactInfo?.email;
-  const contactAddress = contactData?.data?.address || t.contactInfo?.address;
+  const contactPhone = contactData?.phone1 || "";
+  const contactEmail = contactData?.email1 || "";
+  const contactAddress = contactData?.address || "";
 
   return (
     <footer className="bg-gray-900 text-white pt-16 pb-8">
@@ -51,8 +37,7 @@ export default function Footer({
           {/* Company Info - Now first in all views */}
           <div>
             <div className="mb-4">
-              {logoExists ? (
-                <div className="relative w-36 h-12 mb-4 mx-auto md:mx-0">
+            <div className="relative w-36 h-12 mb-4 mx-auto md:mx-0">
                   <Image 
                     src="/images/logo1.png" 
                     alt="Petra Foam" 
@@ -62,12 +47,6 @@ export default function Footer({
                     priority
                   />
                 </div>
-              ) : (
-                <PlaceholderLogo 
-                  className="w-36 h-12 mb-4 mx-auto md:mx-0" 
-                  inverted={true}
-                />
-              )}
               <p className="text-gray-400 mb-6">
                 {companyDescription}
               </p>

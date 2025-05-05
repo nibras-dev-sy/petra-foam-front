@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Locale } from '@/lib/i18n-config';
 import { env } from '@/lib/utils';
 
-const API_URL = env.STRAPI_API_URL;
-const API_TOKEN = env.STRAPI_API_TOKEN;
+const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+const API_TOKEN = process.env.STRAPI_API_TOKEN;
 
 /**
  * API Route handler for Strapi requests

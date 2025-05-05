@@ -1,6 +1,4 @@
-import { env } from "../utils";
-
-const API_URL = env.STRAPI_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
 /**
  * Get the URL for a Strapi media item

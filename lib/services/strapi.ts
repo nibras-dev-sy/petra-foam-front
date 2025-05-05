@@ -1,8 +1,7 @@
 import { Locale } from "../i18n-config";
-import { env } from "../utils";
 
-const API_URL = env.STRAPI_API_URL;
-const API_TOKEN = env.STRAPI_API_TOKEN;
+const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+const API_TOKEN = process.env.STRAPI_API_TOKEN;
 
 /**
  * Fetch data from Strapi API
