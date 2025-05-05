@@ -95,7 +95,7 @@ export default async function AboutUsPage({
         <div className="container relative mx-auto px-4 z-10">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white">
-              {t.aboutUsPage.title}
+              {t.title}
             </h1>
           </div>
         </div>
