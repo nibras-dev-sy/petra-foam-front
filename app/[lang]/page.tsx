@@ -65,7 +65,7 @@ export default async function Home({
   const projectsGridClass = getGridClass(projectsData.length || 3); // Use 3 as fallback for static content
 
   return (
-    <div className={`w-full ${lang === "ar" ? "rtl" : "ltr"}`}>
+    <div className={`w-full`}>
       {/* Section 1: Hero Header with Modern Design */}
       <section className="relative w-full min-h-[600px] flex items-center bg-gradient-to-r from-blue-800 to-blue-600 overflow-hidden">
         {/* Background elements */}
@@ -80,14 +80,14 @@ export default async function Home({
         
         <div className="container relative mx-auto px-4 z-10 py-20 md:py-28">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className={`text-white ${lang === "ar" ? "md:order-2 text-right" : "md:order-1 text-left"}`}>
+            <div className={`text-white`}>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                 {heroData.title}
               </h1>
               <p className="text-lg md:text-xl text-blue-100 mb-8 max-w-xl">
                 {heroData.description}
               </p>
-              <div className={`flex flex-wrap gap-4 ${lang === "ar" ? "justify-end md:justify-start md:flex-row-reverse" : ""}`}>
+              <div className={`flex flex-wrap gap-4`}>
                 <Button 
                   size="lg" 
                   className="bg-white text-blue-700 hover:bg-blue-50 font-medium px-6"
@@ -109,7 +109,7 @@ export default async function Home({
               </div>
             </div>
             
-            <div className={`relative ${lang === "ar" ? "md:order-1" : "md:order-2"} flex justify-center`}>
+            <div className={`relative flex justify-center`}>
               <div className="w-full h-80 md:h-96 lg:h-[450px] relative">
                 <div className="absolute inset-0 bg-blue-700/30 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl transform">
                   {heroData.headerImage ? (
@@ -185,7 +185,7 @@ export default async function Home({
                       />
                     )}
                   </div>
-                  <div className={`p-6 ${lang === "ar" ? "text-right" : "text-left"}`}>
+                  <div className={`p-6`}>
                     <h3 className="text-xl font-bold text-blue-700 mb-2">
                       {product.title}
                     </h3>
@@ -194,12 +194,12 @@ export default async function Home({
                     </p>
                     <Button 
                       variant="default" 
-                      className={`mt-2 ${lang === "ar" ? "flex flex-row-reverse" : ""}`}
+                      className={`mt-2`}
                       asChild
                     >
                       <Link href={`/${lang}/products/${product.id}`}>
                         {t.products?.viewDetailsButton}
-                        <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
+                        <ArrowRight className={`w-4 h-4`} />
                       </Link>
                     </Button>
                   </div>
@@ -239,12 +239,12 @@ export default async function Home({
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Feature 1 */}
-            <div className={`bg-white p-8 rounded-xl shadow-md ${lang === "ar" ? "text-right" : ""}`}>
-              <div className={`flex ${lang === "ar" ? "flex-row-reverse" : ""} items-center mb-4`}>
+            <div className={`bg-white p-8 rounded-xl shadow-md`}>
+              <div className={`flex  items-center mb-4`}>
                 <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-700">
                   <Shield className="w-6 h-6" />
                 </div>
-                <h3 className={`text-xl font-bold text-gray-900 ${lang === "ar" ? "mr-4" : "ml-4"}`}>
+                <h3 className={`text-xl font-bold text-gray-900`}>
                   {t.features?.quality?.title}
                 </h3>
               </div>
@@ -254,12 +254,12 @@ export default async function Home({
             </div>
             
             {/* Feature 2 */}
-            <div className={`bg-white p-8 rounded-xl shadow-md ${lang === "ar" ? "text-right" : ""}`}>
-              <div className={`flex ${lang === "ar" ? "flex-row-reverse" : ""} items-center mb-4`}>
+            <div className={`bg-white p-8 rounded-xl shadow-md`}>
+              <div className={`flex  items-center mb-4`}>
                 <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-700">
                   <Star className="w-6 h-6" />
                 </div>
-                <h3 className={`text-xl font-bold text-gray-900 ${lang === "ar" ? "mr-4" : "ml-4"}`}>
+                <h3 className={`text-xl font-bold text-gray-900`}>
                   {t.features?.performance?.title}
                 </h3>
               </div>
@@ -269,12 +269,12 @@ export default async function Home({
             </div>
             
             {/* Feature 3 */}
-            <div className={`bg-white p-8 rounded-xl shadow-md ${lang === "ar" ? "text-right" : ""}`}>
-              <div className={`flex ${lang === "ar" ? "flex-row-reverse" : ""} items-center mb-4`}>
+            <div className={`bg-white p-8 rounded-xl shadow-md`}>
+              <div className={`flex  items-center mb-4`}>
                 <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-700">
                   <Clock className="w-6 h-6" />
                 </div>
-                <h3 className={`text-xl font-bold text-gray-900 ${lang === "ar" ? "mr-4" : "ml-4"}`}>
+                <h3 className={`text-xl font-bold text-gray-900`}>
                   {t.features?.service?.title}
                 </h3>
               </div>
@@ -321,22 +321,22 @@ export default async function Home({
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                       </div>
                     )}
-                    <div className={`absolute bottom-0 ${lang === "ar" ? "right-0" : "left-0"} p-4 w-full z-10`}>
+                    <div className={`absolute bottom-0 p-4 w-full z-10`}>
                       <h3 className="text-xl font-bold text-white">
                         {project.title}
                       </h3>
                     </div>
                   </div>
-                  <div className={`p-4 ${lang === "ar" ? "text-right" : ""}`}>
+                  <div className={`p-4`}>
                     <p className="text-gray-600 mb-4">
                       {project.description}
                     </p>
                     <Link 
                       href={`/${lang}/projects/${project.slug || project.id}`}
-                      className={`text-blue-700 font-medium inline-flex items-center ${lang === "ar" ? "flex-row-reverse" : ""}`}
+                      className={`text-blue-700 font-medium inline-flex items-center `}
                     >
                       {t.projects?.viewProjectButton}
-                      <ArrowRight className={`w-4 h-4 ${lang === "ar" ? "mr-2 transform rotate-180" : "ml-2"}`} />
+                      <ArrowRight className={`w-4 h-4`} />
                     </Link>
                   </div>
                 </div>

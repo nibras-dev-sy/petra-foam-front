@@ -42,7 +42,7 @@ export default async function ContactUsPage({
   const isRTL = lang === 'ar'
   
   return (
-    <div className={`w-full ${isRTL ? "rtl" : "ltr"}`}>
+    <div className={`w-full`}>
       {/* Hero Section */}
       <section className="relative w-full bg-gradient-to-r from-blue-900 to-blue-700 py-12 md:py-16">
         <div className="absolute inset-0 overflow-hidden">

@@ -49,7 +49,7 @@ export default function Footer({
         {/* Footer Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {/* Company Info - Now first in all views */}
-          <div className={isRtl ? "text-right" : "text-left"}>
+          <div>
             <div className="mb-4">
               {logoExists ? (
                 <div className="relative w-36 h-12 mb-4 mx-auto md:mx-0">
@@ -95,7 +95,7 @@ export default function Footer({
           </div>
 
           {/* Quick Links */}
-          <div className={isRtl ? "text-right" : "text-left"}>
+          <div>
             <h3 className="text-xl font-bold mb-6 text-white">
               {t.quickLinks?.title}
             </h3>
@@ -129,21 +129,21 @@ export default function Footer({
           </div>
 
           {/* Contact Info */}
-          <div className={isRtl ? "text-right" : "text-left"}>
+          <div>
             <h3 className="text-xl font-bold mb-6 text-white">
               {t.contactInfo?.title}
             </h3>
             <ul className="space-y-4">
-              <li className={`flex ${isRtl ? "flex-row-reverse" : ""} items-start`}>
-                <Phone className={`${isRtl ? "mr-0 ml-3" : "mr-3"} text-blue-500 mt-1`} size={18} />
+              <li className={`flex items-start`}>
+                <Phone className={`text-blue-500 mt-1`} size={18} />
                 <span className="text-gray-400">{contactPhone}</span>
               </li>
-              <li className={`flex ${isRtl ? "flex-row-reverse" : ""} items-start`}>
-                <Mail className={`${isRtl ? "mr-0 ml-3" : "mr-3"} text-blue-500 mt-1`} size={18} />
+              <li className={`flex items-start`}>
+                <Mail className={`text-blue-500 mt-1`} size={18} />
                 <span className="text-gray-400">{contactEmail}</span>
               </li>
-              <li className={`flex ${isRtl ? "flex-row-reverse" : ""} items-start`}>
-                <MapPin className={`${isRtl ? "mr-0 ml-3" : "mr-3"} text-blue-500 mt-1`} size={18} />
+              <li className={`flex items-start`}>
+                <MapPin className={`text-blue-500 mt-1`} size={18} />
                 <span className="text-gray-400">{contactAddress}</span>
               </li>
             </ul>

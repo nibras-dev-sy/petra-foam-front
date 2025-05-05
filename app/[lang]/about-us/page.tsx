@@ -48,9 +48,6 @@ export default async function AboutUsPage({
   
   // Fetch about us data from Strapi
   const aboutUsData = await getAboutUsInfo(lang, dictionary)
-  
-  // Check if the page is in RTL mode
-  const isRTL = lang === "ar"
 
   // Timeline data from dictionary
   const timeline = t.timeline || {}
@@ -89,7 +86,7 @@ export default async function AboutUsPage({
   ]
 
   return (
-    <div className={`w-full ${isRTL ? "rtl" : "ltr"}`}>
+    <div className={`w-full`}>
       {/* Hero Section */}
       <section className="relative w-full bg-gradient-to-r from-blue-900 to-blue-700 py-12 md:py-16">
         <div className="absolute inset-0 overflow-hidden">
@@ -109,7 +106,7 @@ export default async function AboutUsPage({
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             {/* Text Content */}
-            <div className={isRTL ? "md:order-2" : ""}>
+            <div>
               <div className="prose prose-lg max-w-none">
                 {aboutUsData.description.split("\n\n").map((paragraph: string, index: number) => (
                   <p key={index} className="text-gray-700 mb-6">
@@ -120,7 +117,7 @@ export default async function AboutUsPage({
             </div>
             
             {/* Image */}
-            <div className={isRTL ? "md:order-1" : ""}>
+            <div>
               <div className="relative rounded-xl overflow-hidden shadow-xl h-80 md:h-96">
                 {/* We use a placeholder until we have actual images */}
                 <div className="absolute inset-0 bg-blue-600 flex items-center justify-center">
@@ -169,14 +166,14 @@ export default async function AboutUsPage({
               {/* Timeline Events */}
               <div className="space-y-20">
                 {timelineEvents.map((event: TimelineEvent, index: number) => (
-                  <div key={index} className={`relative flex items-center justify-between ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} ${isRTL ? 'md:flex-row-reverse' : ''}`}>
+                  <div key={index} className={`relative flex items-center justify-between ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
                     {/* Timeline Point */}
                     <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center z-10 border-4 border-white">
                       {timelineIcons[index] || <div className="h-3 w-3 bg-white rounded-full"></div>}
                     </div>
                     
                     {/* Content */}
-                    <div className={`w-5/12 pr-8 ${index % 2 === 0 ? 'text-right' : 'text-left'} ${isRTL ? 'md:text-left md:pl-8 md:pr-0' : ''}`}>
+                    <div className={`w-5/12 pr-8 ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
                       <div className="bg-white rounded-lg shadow-lg p-6">
                         <h3 className="text-xl font-bold text-blue-700 mb-2">{event.title}</h3>
                         <p className="text-gray-600">{event.description}</p>
@@ -184,7 +181,7 @@ export default async function AboutUsPage({
                     </div>
                     
                     {/* Year */}
-                    <div className={`w-5/12 pl-8 ${index % 2 === 0 ? 'text-left' : 'text-right'} ${isRTL ? 'md:text-right md:pr-8 md:pl-0' : ''}`}>
+                    <div className={`w-5/12 pl-8 ${index % 2 === 0 ? 'text-left' : 'text-right'}`}>
                       <div className="text-4xl font-bold text-blue-800">{event.year}</div>
                     </div>
                   </div>

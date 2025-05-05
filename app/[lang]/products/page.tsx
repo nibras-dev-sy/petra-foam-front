@@ -20,12 +20,9 @@ export default async function ProductsPage({
   
   // Fetch products data from Strapi
   const productsData = await getProductsData(lang, dictionary)
-  
-  // Check if the page is in RTL mode
-  const isRTL = lang === "ar"
 
   return (
-    <div className={`w-full ${isRTL ? "rtl" : "ltr"}`}>
+    <div className={`w-full`}>
       {/* Hero Section */}
       <section className="relative w-full bg-gradient-to-r from-blue-900 to-blue-700 py-16 md:py-24">
         <div className="absolute inset-0 overflow-hidden">
@@ -55,7 +52,7 @@ export default async function ProductsPage({
               <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                   {/* Content Section */}
-                  <div className={`space-y-6 ${index % 2 === 0 ? isRTL ? "lg:order-2" : "lg:order-1" : isRTL ? "lg:order-1" : "lg:order-2"}`}>
+                  <div className={`space-y-6 ${index % 2 === 0 ? "lg:order-1" : "lg:order-2"}`}>
                     <h2 className="text-3xl font-bold text-blue-900">
                       {product.title}
                     </h2>
@@ -85,7 +82,6 @@ export default async function ProductsPage({
                       {product.catalogue && (
                         <Button 
                           variant="default" 
-                          className={`${isRTL ? "flex flex-row-reverse" : ""}`}
                           asChild
                         >
                           <Link 
@@ -94,7 +90,7 @@ export default async function ProductsPage({
                             rel="noopener noreferrer"
                           >
                             {t.downloadCatalogueButton || "Download Catalogue"}
-                            <Download className={`w-4 h-4 ${isRTL ? "mr-2" : "ml-2"}`} />
+                            <Download className={`w-4 h-4 "ml-2"`} />
                           </Link>
                         </Button>
                       )}
@@ -102,11 +98,10 @@ export default async function ProductsPage({
                   </div>
                   
                   {/* Image Section */}
-                  <div className={`flex justify-center ${index % 2 === 0 ? isRTL ? "lg:order-1" : "lg:order-2" : isRTL ? "lg:order-2" : "lg:order-1"}`}>
+                  <div className={`flex justify-center ${index % 2 === 0 ? "lg:order-2" : "lg:order-1"}`}>
                     <ImageCarousel 
                       images={product.images || []} 
                       productTitle={product.title}
-                      isRTL={isRTL}
                       imageText={{
                         previous: t.previousImage || "Previous image",
                         next: t.nextImage || "Next image",

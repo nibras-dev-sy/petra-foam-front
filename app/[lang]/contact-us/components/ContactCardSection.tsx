@@ -43,7 +43,7 @@ export default function ContactCardSection({
               <Phone className="h-8 w-8 text-blue-600" />
             </div>
             <h3 className="text-xl font-bold text-center text-blue-700 mb-4">{dictionary.contactInfo.phoneTitle}</h3>
-            <div className="space-y-2 text-center">
+            <div className="space-y-2 text-center" dir="ltr">
               <p className="text-gray-700">
                 <a href={`tel:${contactData.phone1}`} className="hover:text-blue-600">
                   {contactData.phone1}
