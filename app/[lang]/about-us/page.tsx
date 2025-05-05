@@ -2,7 +2,7 @@ import { getDictionary } from "@/lib/dictionary"
 import type { Metadata } from "next"
 import type { Locale } from "@/lib/i18n-config"
 import { getAboutUsInfo } from "@/lib/strapi-page-api"
-import Image from "next/image"
+import { StrapiImage } from "@/app/components/custom/strapi-image"
 import {
   Award,
   Leaf,
@@ -119,27 +119,29 @@ export default async function AboutUsPage({
             {/* Image */}
             <div>
               <div className="relative rounded-xl overflow-hidden shadow-xl h-80 md:h-96">
-                {/* We use a placeholder until we have actual images */}
-                <div className="absolute inset-0 bg-blue-600 flex items-center justify-center">
-                  <div className="text-white text-center p-8">
-                    <Factory className="w-16 h-16 mx-auto mb-4 opacity-75" />
-                    <h3 className="text-2xl font-bold mb-2">{t.modernFacility || "Our Modern Facility"}</h3>
-                    <p className="text-blue-100 max-w-xs mx-auto">
-                      {t.facilityDescription || "State-of-the-art manufacturing plant producing high-quality insulation materials"}
-                    </p>
+                {aboutUsData.image && aboutUsData.image.url ? (
+                  <StrapiImage 
+                    src={aboutUsData.image.url}
+                    alt={aboutUsData.image.alt || "About Us Image"}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority
+                    height={aboutUsData.image.height || 600}
+                    width={aboutUsData.image.width || 800}
+                  />
+                ) : (
+                  /* Placeholder when no image is available */
+                  <div className="absolute inset-0 bg-blue-600 flex items-center justify-center">
+                    <div className="text-white text-center p-8">
+                      <Factory className="w-16 h-16 mx-auto mb-4 opacity-75" />
+                      <h3 className="text-2xl font-bold mb-2">{t.modernFacility || "Our Modern Facility"}</h3>
+                      <p className="text-blue-100 max-w-xs mx-auto">
+                        {t.facilityDescription || "State-of-the-art manufacturing plant producing high-quality insulation materials"}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                {/* Uncomment below when actual image is available */}
-                {/* 
-                <Image 
-                  src="/images/about-factory.jpg" 
-                  alt="Petra Foam Factory"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  priority
-                />
-                */}
+                )}
               </div>
             </div>
           </div>

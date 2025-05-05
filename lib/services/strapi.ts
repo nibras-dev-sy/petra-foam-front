@@ -80,7 +80,7 @@ export async function getProjectsData(locale: Locale = "en") {
  */
 export async function getAboutUsData(locale: Locale = "en") {
   try {
-    const data = await fetchAPI(`/api/about-us-info?locale=${locale}`);
+    const data = await fetchAPI(`/api/about-us-info?populate=image&locale=${locale}`);
     return data;
   } catch (error) {
     console.error("Error fetching about us data:", error);

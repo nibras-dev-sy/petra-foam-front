@@ -148,20 +148,48 @@ export async function getAboutUsInfo(lang: Locale, dictionary: any) {
     
     // If data exists, return it
     if (aboutUsData?.data) {
+      // Process image if it exists
+      const imageData = aboutUsData.data.image 
+        ? {
+            url: getStrapiMediaUrl(aboutUsData.data.image.formats?.medium?.url || aboutUsData.data.image.url),
+            alt: aboutUsData.data.image.alternativeText || '',
+            width: aboutUsData.data.image.formats?.medium?.width || aboutUsData.data.image.width,
+            height: aboutUsData.data.image.formats?.medium?.height || aboutUsData.data.image.height,
+          }
+        : {
+            url: '',
+            alt: '',
+            width: 0,
+            height: 0
+          };
+      
       return {
         description: aboutUsData.data.description || "",
+        image: imageData
       };
     }
     
-    // Fallback to dictionary
+    // Return empty values if no data
     return {
       description: "",
+      image: {
+        url: '',
+        alt: '',
+        width: 0,
+        height: 0
+      }
     };
   } catch (error) {
     console.error('Error getting about us data:', error);
-    // Fallback to dictionary
+    // Return empty values
     return {
       description: "",
+      image: {
+        url: '',
+        alt: '',
+        width: 0,
+        height: 0
+      }
     };
   }
 }
