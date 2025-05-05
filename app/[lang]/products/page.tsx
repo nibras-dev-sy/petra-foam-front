@@ -9,6 +9,8 @@ import PlaceholderImage from "@/components/placeholder-image"
 import { ImageCarousel } from "@/components/ui/image-carousel"
 import { getProductsData } from "@/lib/strapi-page-api"
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProductsPage({
   params,
 }: {

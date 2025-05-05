@@ -9,6 +9,9 @@ import PlaceholderImage from "@/components/placeholder-image"
 import { getHeroData, getProductsData, getProjectsData } from "@/lib/strapi-page-api"
 import { Suspense } from "react"
 
+// Add at the top of the file near the other imports and exports
+export const dynamic = 'force-dynamic';
+
 // Generate metadata for the homepage
 export async function generateMetadata({
   params,

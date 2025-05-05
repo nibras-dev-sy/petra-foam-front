@@ -6,6 +6,9 @@ import ContactCardSection from './components/ContactCardSection'
 import ContactForm from './components/ContactForm'
 import MapSection from './components/MapSection'
 
+// Add at the top of the file near the other imports and exports
+export const dynamic = 'force-dynamic';
+
 // Generate metadata for the contact-us page
 export async function generateMetadata({
   params,

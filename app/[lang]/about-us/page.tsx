@@ -14,6 +14,9 @@ import {
   Globe,
 } from "lucide-react"
 
+// Set page to be dynamically rendered at request time
+export const dynamic = 'force-dynamic';
+
 // Generate metadata for the about-us page
 export async function generateMetadata({
   params,
