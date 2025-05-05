@@ -36,7 +36,7 @@ export default async function ContactUsPage({
 }) {
   const { lang } = await params
   const dictionary = await getDictionary(lang)
-  const contactData = await getContactInfo(lang)
+  const contactData = await getContactInfo(lang, dictionary)
   
   const t = dictionary.contactPage
   const isRTL = lang === 'ar'
