@@ -16,17 +16,17 @@ export async function getHeroData(lang: Locale, dictionary: any) {
         : null;
         
       return {
-        title: homepageData.data.title || dictionary.homePage?.hero?.title,
-        description: homepageData.data.description || dictionary.homePage?.hero?.description,
-        headerImage: headerImage,
+        title: homepageData.data.title || "",
+        description: homepageData.data.description || "",
+        headerImage: headerImage || 'Petra Foam Header Image',
         headerImageAlt: homepageData.data.header_image?.alternativeText || 'Petra Foam Header Image'
       };
     }
     
     // Fallback to dictionary
     return {
-      title: dictionary.homePage?.hero?.title,
-      description: dictionary.homePage?.hero?.description,
+      title: "",
+      description: "",
       headerImage: null,
       headerImageAlt: 'Petra Foam Header Image'
     };
@@ -34,8 +34,8 @@ export async function getHeroData(lang: Locale, dictionary: any) {
     console.error('Error getting hero data:', error);
     // Fallback to dictionary
     return {
-      title: dictionary.homePage?.hero?.title,
-      description: dictionary.homePage?.hero?.description,
+      title: "",
+      description: "",
       headerImage: null,
       headerImageAlt: 'Petra Foam Header Image'
     };
@@ -149,22 +149,19 @@ export async function getAboutUsInfo(lang: Locale, dictionary: any) {
     // If data exists, return it
     if (aboutUsData?.data) {
       return {
-        title: aboutUsData.data.title || dictionary.aboutUsPage?.title,
-        description: aboutUsData.data.description || dictionary.aboutUsPage?.description,
+        description: aboutUsData.data.description || "",
       };
     }
     
     // Fallback to dictionary
     return {
-      title: dictionary.aboutUsPage?.title,
-      description: dictionary.aboutUsPage?.description,
+      description: "",
     };
   } catch (error) {
     console.error('Error getting about us data:', error);
     // Fallback to dictionary
     return {
-      title: dictionary.aboutUsPage?.title,
-      description: dictionary.aboutUsPage?.description,
+      description: "",
     };
   }
 }
@@ -172,16 +169,6 @@ export async function getAboutUsInfo(lang: Locale, dictionary: any) {
 // Function to get contact info from Strapi API
 export async function getContactInfo(locale: string) {
   try {
-    // Skip API call during build to prevent errors
-    if (process.env.NODE_ENV === 'production' && typeof window === 'undefined') {
-      return {
-        email1: 'info@petra-foam.com',
-        email2: 'sales@petra-foam.com',
-        phone1: '+962 6 4711780',
-        phone2: '+962 796655027',
-        address: 'Alqastal Industial Zone, Amman / Jordan'
-      };
-    }
     
     // Check if API URL is defined
     const apiUrl = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/contact-info?locale=${locale}`;
