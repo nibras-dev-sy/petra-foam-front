@@ -25,7 +25,13 @@
       "density": "الكثافة",
       "thermalConductivity": "التوصيل الحراري",
       "compressiveStrength": "مقاومة الضغط",
-      "waterAbsorption": "امتصاص الماء"
+      "waterAbsorption": "امتصاص الماء",
+      "details": {
+        "الكثافة": "35 kg/m³",
+        "التوصيل الحراري": "0.032 W/mK",
+        "مقاومة الضغط": "100 kPa",
+        "امتصاص الماء": "< 1%"
+      }
     },
     "eps": {
       "title": "عزل EPS", 
@@ -33,7 +39,13 @@
       "density": "الكثافة",
       "thermalConductivity": "التوصيل الحراري",
       "compressiveStrength": "مقاومة الضغط",
-      "waterAbsorption": "امتصاص الماء"
+      "waterAbsorption": "امتصاص الماء",
+      "details": {
+        "الكثافة": "20 kg/m³",
+        "التوصيل الحراري": "0.038 W/mK",
+        "مقاومة الضغط": "100 kPa",
+        "امتصاص الماء": "< 2%"
+      }
     }
   },
   "homePage": {

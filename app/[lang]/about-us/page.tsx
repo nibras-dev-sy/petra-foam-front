@@ -118,7 +118,7 @@ export default async function AboutUsPage({
             <div>
               <div className="relative rounded-xl overflow-hidden shadow-xl h-80 md:h-96">
               <Image
-                    src="/images/products-extruded-polystyrene-sheets-xps-wa.webp"
+                    src="/images/aboutus_img.jpg"
                     alt="Extruded Polystyrene Sheets XPS"
                     fill
                     style={{ objectFit: "cover" }}

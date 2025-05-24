@@ -25,7 +25,7 @@ export async function generateMetadata({
   const isArabic = lang === "ar"
 
   return {
-    title: isArabic ? 'الرئيسية' : 'Home',
+    title: isArabic ? 'بترا فوم' : 'Petra Foam',
     description: t.hero?.description || (isArabic
       ? "بترا فوم توفر أفضل منتجات العزل الحراري لتحسين كفاءة الطاقة وتوفير التكاليف في مشاريع البناء"
       : "Petra Foam provides the best thermal insulation products to improve energy efficiency and reduce costs in construction projects"),

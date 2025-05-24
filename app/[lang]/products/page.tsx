@@ -89,7 +89,22 @@ export default async function ProductsPage({
               {/* Image Section */}
               <div className={`flex justify-center lg:order-2`}>
                 <ImageCarousel
-                  images={[]}
+                  images={[
+                    {
+                      id: 1,
+                      url: "/images/hero_header_img.webp",
+                      alt: t.xps.title,
+                      width: 800,
+                      height: 600
+                    },
+                    {
+                      id: 2,
+                      url: "/images/products-extruded-polystyrene-sheets-xps-wa.webp",
+                      alt: t.eps.title,
+                      width: 800,
+                      height: 600
+                    }
+                  ]}
                   productTitle={t.xps.title}
                   imageText={{
                     previous: t.previousImage || "Previous image",
@@ -154,7 +169,15 @@ export default async function ProductsPage({
               {/* Image Section */}
               <div className={`flex justify-center lg:order-1`}>
                 <ImageCarousel
-                  images={[]}
+                  images={[
+                    {
+                      id: 1,
+                      url: "/images/EPS-scaled.jpg",
+                      alt: t.xps.title,
+                      width: 800,
+                      height: 600
+                    }
+                  ]}
                   productTitle={t.eps.title}
                   imageText={{
                     previous: t.previousImage || "Previous image",
