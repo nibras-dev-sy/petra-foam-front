@@ -25,7 +25,13 @@
       "density": "Density",
       "thermalConductivity": "Thermal Conductivity",
       "compressiveStrength": "Compressive Strength",
-      "waterAbsorption": "Water Absorption"
+      "waterAbsorption": "Water Absorption",
+      "details": {
+        "Density": "20 kg/m³",
+        "Thermal Conductivity": "0.038 W/mK",
+        "Compressive Strength": "100 kPa",
+        "Water Absorption": "< 2%"
+      }
     },
     "eps": {
       "title": "EPS Insulation", 
@@ -33,7 +39,13 @@
       "density": "Density",
       "thermalConductivity": "Thermal Conductivity",
       "compressiveStrength": "Compressive Strength",
-      "waterAbsorption": "Water Absorption"
+      "waterAbsorption": "Water Absorption",
+      "details": {
+        "Density": "20 kg/m³",
+        "Thermal Conductivity": "0.038 W/mK",
+        "Compressive Strength": "100 kPa",
+        "Water Absorption": "< 2%"
+      }
     }
   },
   "aboutUsPage": {
@@ -98,7 +110,12 @@
       "title": "Contact Information",
       "emailTitle": "Email",
       "phoneTitle": "Phone",
-      "addressTitle": "Address"
+      "addressTitle": "Address",
+      "email1": "info@petra-foam.com",
+      "email2": "sales@petra-foam.com",
+      "phone1": "+962 6 4711780",
+      "phone2": "+962 6 4711781",
+      "address": "Alqastal Industrial Area, Amman, Jordan"
     },
     "formSection": {
       "title": "Send us a Message",

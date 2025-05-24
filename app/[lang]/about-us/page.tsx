@@ -1,8 +1,6 @@
 import { getDictionary } from "@/lib/dictionary"
 import type { Metadata } from "next"
-import type { Locale } from "@/lib/i18n-config"
-import { getAboutUsInfo } from "@/lib/strapi-page-api"
-import { StrapiImage } from "@/app/components/custom/strapi-image"
+import Image from "next/image"
 import {
   Award,
   Leaf,
@@ -48,9 +46,6 @@ export default async function AboutUsPage({
   const { lang } = await params
   const dictionary = await getDictionary(lang)
   const t = dictionary.aboutUsPage || {}
-  
-  // Fetch about us data from Strapi
-  const aboutUsData = await getAboutUsInfo(lang, dictionary)
 
   // Timeline data from dictionary
   const timeline = t.timeline || {}
@@ -111,7 +106,7 @@ export default async function AboutUsPage({
             {/* Text Content */}
             <div>
               <div className="prose prose-lg max-w-none">
-                {aboutUsData.description.split("\n\n").map((paragraph: string, index: number) => (
+                {t.description.split("\n\n").map((paragraph: string, index: number) => (
                   <p key={index} className="text-gray-700 mb-6">
                     {paragraph}
                   </p>
@@ -122,29 +117,13 @@ export default async function AboutUsPage({
             {/* Image */}
             <div>
               <div className="relative rounded-xl overflow-hidden shadow-xl h-80 md:h-96">
-                {aboutUsData.image && aboutUsData.image.url ? (
-                  <StrapiImage 
-                    src={aboutUsData.image.url}
-                    alt={aboutUsData.image.alt || "About Us Image"}
+              <Image
+                    src="/images/products-extruded-polystyrene-sheets-xps-wa.webp"
+                    alt="Extruded Polystyrene Sheets XPS"
                     fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    priority
-                    height={aboutUsData.image.height || 600}
-                    width={aboutUsData.image.width || 800}
+                    style={{ objectFit: "cover" }}
+                    className="transition-transform hover:scale-105"
                   />
-                ) : (
-                  /* Placeholder when no image is available */
-                  <div className="absolute inset-0 bg-blue-600 flex items-center justify-center">
-                    <div className="text-white text-center p-8">
-                      <Factory className="w-16 h-16 mx-auto mb-4 opacity-75" />
-                      <h3 className="text-2xl font-bold mb-2">{t.modernFacility || "Our Modern Facility"}</h3>
-                      <p className="text-blue-100 max-w-xs mx-auto">
-                        {t.facilityDescription || "State-of-the-art manufacturing plant producing high-quality insulation materials"}
-                      </p>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </div>

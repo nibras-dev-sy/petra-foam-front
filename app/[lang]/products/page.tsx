@@ -1,13 +1,9 @@
 import { getDictionary } from "@/lib/dictionary"
 import type { Metadata } from "next"
-import type { Locale } from "@/lib/i18n-config"
-import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ChevronRight, Download } from "lucide-react"
-import PlaceholderImage from "@/components/placeholder-image"
 import { ImageCarousel } from "@/components/ui/image-carousel"
-import { getProductsData } from "@/lib/strapi-page-api"
 
 export const dynamic = 'force-dynamic';
 
@@ -19,9 +15,6 @@ export default async function ProductsPage({
   const { lang } = await params
   const dictionary = await getDictionary(lang)
   const t = dictionary.productsPage || {}
-  
-  // Fetch products data from Strapi
-  const productsData = await getProductsData(lang, dictionary)
 
   return (
     <div className={`w-full`}>
@@ -44,84 +37,135 @@ export default async function ProductsPage({
 
       {/* Products Sections */}
       <div>
-        {productsData.length > 0 ? (
-          productsData.map((product, index) => (
-            <section 
-              key={product.id} 
-              id={`product-${product.id}`} 
-              className={`py-16 ${index !== 0 ? "border-t border-gray-200" : ""} ${index % 2 === 0 ? "bg-white" : "bg-gray-100"}`}
-            >
-              <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                  {/* Content Section */}
-                  <div className={`space-y-6 ${index % 2 === 0 ? "lg:order-1" : "lg:order-2"}`}>
-                    <h2 className="text-3xl font-bold text-blue-900">
-                      {product.title}
-                    </h2>
-                    <p className="text-gray-600 leading-relaxed">
-                      {product.description}
-                    </p>
-                    
-                    {product.details && Object.keys(product.details).length > 0 && (
-                      <div className={`rounded-lg shadow-lg p-6 ${index % 2 === 0 ? "bg-white" : "bg-white"}`}>
-                        <h3 className="text-xl font-semibold text-blue-900 mb-4">
-                          {t.specificationsTitle || "Technical Specifications"}
-                        </h3>
-                        <table className="w-full">
-                          <tbody className="divide-y divide-gray-200">
-                            {Object.entries(product.details).map(([key, value]: [string, any]) => (
-                              <tr key={key} className="hover:bg-gray-50">
-                                <td className="py-3 font-medium">{key}</td>
-                                <td className="py-3">{String(value)}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    )}
-                    
-                    <div className="flex flex-wrap gap-4">
-                      {product.catalogue && (
-                        <Button 
-                          variant="default" 
-                          asChild
-                        >
-                          <Link 
-                            href={product.catalogue.url} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                          >
-                            {t.downloadCatalogueButton || "Download Catalogue"}
-                            <Download className={`w-4 h-4 "ml-2"`} />
-                          </Link>
-                        </Button>
-                      )}
-                    </div>
+        <section
+          className={`py-16 border-t border-gray-200 bg-white`}
+        >
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Content Section */}
+              <div className={`space-y-6 lg:order-1`}>
+                <h2 className="text-3xl font-bold text-blue-900">
+                  {t.xps.title}
+                </h2>
+                <p className="text-gray-600 leading-relaxed">
+                  {t.xps.description}
+                </p>
+
+                {t.xps.details && Object.keys(t.xps.details).length > 0 && (
+                  <div className={`rounded-lg shadow-lg p-6 bg-white`}>
+                    <h3 className="text-xl font-semibold text-blue-900 mb-4">
+                      {t.specificationsTitle || "Technical Specifications"}
+                    </h3>
+                    <table className="w-full">
+                      <tbody className="divide-y divide-gray-200">
+                        {Object.entries(t.xps.details).map(([key, value]: [string, any]) => (
+                          <tr key={key} className="hover:bg-gray-50">
+                            <td className="py-3 font-medium">{key}</td>
+                            <td className="py-3">{String(value)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
-                  
-                  {/* Image Section */}
-                  <div className={`flex justify-center ${index % 2 === 0 ? "lg:order-2" : "lg:order-1"}`}>
-                    <ImageCarousel 
-                      images={product.images || []} 
-                      productTitle={product.title}
-                      imageText={{
-                        previous: t.previousImage || "Previous image",
-                        next: t.nextImage || "Next image",
-                        counterFormat: t.imageCounterFormat || "{current} / {total}"
-                      }}
-                    />
-                  </div>
+                )}
+
+                <div className="flex flex-wrap gap-4">
+                  <Button
+                    variant="default"
+                    asChild
+                  >
+                    <Link
+                      href={`/images/xps_proch_${lang}.jpg`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {t.downloadCatalogueButton || "Download Catalogue"}
+                      <Download className={`w-4 h-4 "ml-2"`} />
+                    </Link>
+                  </Button>
                 </div>
               </div>
-            </section>
-          ))
-        ) : (
-          <div className="container mx-auto px-4">
-            <div className="text-center py-16">
-              <p className="text-gray-500">{t.noProductsFound || "No products found."}</p>
+
+              {/* Image Section */}
+              <div className={`flex justify-center lg:order-2`}>
+                <ImageCarousel
+                  images={[]}
+                  productTitle={t.xps.title}
+                  imageText={{
+                    previous: t.previousImage || "Previous image",
+                    next: t.nextImage || "Next image",
+                    counterFormat: t.imageCounterFormat || "{current} / {total}"
+                  }}
+                />
+              </div>
             </div>
           </div>
-        )}
+        </section>
+
+        <section
+          className={`py-16 bg-gray-100`}
+        >
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Content Section */}
+              <div className={`space-y-6 lg:order-2`}>
+                <h2 className="text-3xl font-bold text-blue-900">
+                  {t.eps.title}
+                </h2>
+                <p className="text-gray-600 leading-relaxed">
+                  {t.eps.description}
+                </p>
+
+                {t.eps.details && Object.keys(t.eps.details).length > 0 && (
+                  <div className={`rounded-lg shadow-lg p-6 bg-white`}>
+                    <h3 className="text-xl font-semibold text-blue-900 mb-4">
+                      {t.specificationsTitle || "Technical Specifications"}
+                    </h3>
+                    <table className="w-full">
+                      <tbody className="divide-y divide-gray-200">
+                        {Object.entries(t.eps.details).map(([key, value]: [string, any]) => (
+                          <tr key={key} className="hover:bg-gray-50">
+                            <td className="py-3 font-medium">{key}</td>
+                            <td className="py-3">{String(value)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                <div className="flex flex-wrap gap-4">
+                  <Button
+                    variant="default"
+                    asChild
+                  >
+                    <Link
+                      href="/images/eps_proch.jpg"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {t.downloadCatalogueButton || "Download Catalogue"}
+                      <Download className={`w-4 h-4 "ml-2"`} />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Image Section */}
+              <div className={`flex justify-center lg:order-1`}>
+                <ImageCarousel
+                  images={[]}
+                  productTitle={t.eps.title}
+                  imageText={{
+                    previous: t.previousImage || "Previous image",
+                    next: t.nextImage || "Next image",
+                    counterFormat: t.imageCounterFormat || "{current} / {total}"
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   )
@@ -136,12 +180,12 @@ export async function generateMetadata({
   const { lang } = await params
   const dictionary = await getDictionary(lang)
   const t = dictionary.productsPage || {}
-  
+
   const isArabic = lang === "ar"
-  
+
   return {
     title: isArabic ? 'المنتجات' : 'Products',
-    description: t.description || (isArabic 
+    description: t.description || (isArabic
       ? "استكشف مجموعتنا من حلول العزل الحراري عالية الجودة لمشاريع البناء الخاصة بك"
       : "Explore our range of high-quality thermal insulation solutions for your construction projects"),
     keywords: isArabic

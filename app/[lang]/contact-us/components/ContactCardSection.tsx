@@ -3,10 +3,8 @@
 import { Mail, Phone, MapPin } from "lucide-react"
 
 export default function ContactCardSection({
-  contactData,
   dictionary
 }: {
-  contactData: any;
   dictionary: any;
 }) {
   return (
@@ -25,13 +23,13 @@ export default function ContactCardSection({
             <h3 className="text-xl font-bold text-center text-blue-700 mb-4">{dictionary.contactInfo.emailTitle}</h3>
             <div className="space-y-2 text-center">
               <p className="text-gray-700">
-                <a href={`mailto:${contactData.email1}`} className="hover:text-blue-600">
-                  {contactData.email1}
+                <a href={`mailto:${dictionary.contactInfo.email1}`} className="hover:text-blue-600">
+                  {dictionary.contactInfo.email1}
                 </a>
               </p>
               <p className="text-gray-700">
-                <a href={`mailto:${contactData.email2}`} className="hover:text-blue-600">
-                  {contactData.email2}
+                <a href={`mailto:${dictionary.contactInfo.email2}`} className="hover:text-blue-600">
+                  {dictionary.contactInfo.email2}
                 </a>
               </p>
             </div>
@@ -45,13 +43,13 @@ export default function ContactCardSection({
             <h3 className="text-xl font-bold text-center text-blue-700 mb-4">{dictionary.contactInfo.phoneTitle}</h3>
             <div className="space-y-2 text-center" dir="ltr">
               <p className="text-gray-700">
-                <a href={`tel:${contactData.phone1}`} className="hover:text-blue-600">
-                  {contactData.phone1}
+                <a href={`tel:${dictionary.contactInfo.phone1}`} className="hover:text-blue-600">
+                  {dictionary.contactInfo.phone1}
                 </a>
               </p>
               <p className="text-gray-700">
-                <a href={`tel:${contactData.phone2}`} className="hover:text-blue-600">
-                  {contactData.phone2}
+                <a href={`tel:${dictionary.contactInfo.phone2}`} className="hover:text-blue-600">
+                  {dictionary.contactInfo.phone2}
                 </a>
               </p>
             </div>
@@ -64,7 +62,7 @@ export default function ContactCardSection({
             </div>
             <h3 className="text-xl font-bold text-center text-blue-700 mb-4">{dictionary.contactInfo.addressTitle}</h3>
             <p className="text-gray-700 text-center">
-              {contactData.address}
+              {dictionary.contactInfo.address}
             </p>
           </div>
         </div>

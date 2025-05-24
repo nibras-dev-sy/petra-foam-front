@@ -14,18 +14,11 @@ export default async function Footer({
   lang: Locale
   dictionary: any
 }) {
-  const contactData = await getContactInfo(lang, dictionary);
-
+  
   const currentYear = new Date().getFullYear()
   const isRtl = lang === "ar"
   const t = dictionary.footer || {}
   const nav = dictionary.navigation || {}
-  
-  // Get contact info from the contact API, fallback to footer data if not available, then to dictionary
-  const companyDescription = t.company?.description;
-  const contactPhone = contactData?.phone1 || "";
-  const contactEmail = contactData?.email1 || "";
-  const contactAddress = contactData?.address || "";
 
   return (
     <footer className="bg-gray-900 text-white pt-16 pb-8">
@@ -46,7 +39,7 @@ export default async function Footer({
                   />
                 </div>
               <p className="text-gray-400 mb-6">
-                {companyDescription}
+                Providing high-quality thermal insulation products to improve energy efficiency in your construction projects
               </p>
             </div>
             <div className="flex space-x-4 mb-6">
@@ -113,15 +106,15 @@ export default async function Footer({
             <ul className="space-y-4">
               <li className={`flex items-start`}>
                 <Phone className={`text-blue-500 mt-1`} size={18} />
-                <span className="text-gray-400 ml-4" dir="ltr">{contactPhone}</span>
+                <span className="text-gray-400 ml-4" dir="ltr">{t.contactInfo?.phone}</span>
               </li>
               <li className={`flex items-start`}>
                 <Mail className={`text-blue-500 mt-1`} size={18} />
-                <span className="text-gray-400 ml-4">{contactEmail}</span>
+                <span className="text-gray-400 ml-4">{t.contactInfo?.email}</span>
               </li>
               <li className={`flex items-start`}>
                 <MapPin className={`text-blue-500 mt-1`} size={18} />
-                <span className="text-gray-400 ml-4">{contactAddress}</span>
+                <span className="text-gray-400 ml-4">{t.contactInfo?.address}</span>
               </li>
             </ul>
           </div>
